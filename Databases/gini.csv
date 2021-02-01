@@ -1,0 +1,803 @@
+País,Área geográfica,Años,id_fuente,ids_notas,iso3,valor
+América Latina (promedio simple),Nacional,2001,26,"8620,7765",,0.53
+América Latina (promedio simple),Rural,2001,26,"8620,10395",,0.5
+América Latina (promedio simple),Urbana,2001,26,"8620,7765",,0.5
+América Latina (promedio simple),Nacional,2002,26,"8620,7765",,0.54
+América Latina (promedio simple),Rural,2002,26,"8620,10395",,0.51
+América Latina (promedio simple),Urbana,2002,26,"8620,7765",,0.5
+América Latina (promedio simple),Nacional,2003,26,"8620,7765",,0.53
+América Latina (promedio simple),Rural,2003,26,"8620,10395",,0.49
+América Latina (promedio simple),Urbana,2003,26,"8620,7765",,0.51
+América Latina (promedio simple),Nacional,2004,26,"8620,7765",,0.52
+América Latina (promedio simple),Rural,2004,26,"8620,10395",,0.49
+América Latina (promedio simple),Urbana,2004,26,"8620,7765",,0.5
+América Latina (promedio simple),Nacional,2005,26,"8620,7765",,0.52
+América Latina (promedio simple),Rural,2005,26,"8620,10395",,0.49
+América Latina (promedio simple),Urbana,2005,26,"8620,7765",,0.5
+América Latina (promedio simple),Nacional,2006,26,"8620,7765",,0.52
+América Latina (promedio simple),Rural,2006,26,"8620,10395",,0.49
+América Latina (promedio simple),Urbana,2006,26,"8620,7765",,0.49
+América Latina (promedio simple),Nacional,2007,26,"8620,7765",,0.51
+América Latina (promedio simple),Rural,2007,26,"8620,7766",,0.48
+América Latina (promedio simple),Urbana,2007,26,"8620,7765",,0.49
+América Latina (promedio simple),Nacional,2008,26,"8620,7765",,0.5
+América Latina (promedio simple),Rural,2008,26,"8620,7766",,0.48
+América Latina (promedio simple),Urbana,2008,26,"8620,7765",,0.47
+América Latina (promedio simple),Nacional,2009,26,"8620,7765",,0.49
+América Latina (promedio simple),Rural,2009,26,"8620,7766",,0.46
+América Latina (promedio simple),Urbana,2009,26,"8620,7765",,0.47
+América Latina (promedio simple),Nacional,2010,26,"8620,7765",,0.49
+América Latina (promedio simple),Rural,2010,26,"8620,7766",,0.46
+América Latina (promedio simple),Urbana,2010,26,"8620,7765",,0.46
+América Latina (promedio simple),Nacional,2011,26,"8620,7765",,0.48
+América Latina (promedio simple),Rural,2011,26,"8620,7766",,0.47
+América Latina (promedio simple),Urbana,2011,26,"8620,7765",,0.46
+América Latina (promedio simple),Nacional,2012,26,"8620,7765",,0.48
+América Latina (promedio simple),Rural,2012,26,"8620,7766",,0.46
+América Latina (promedio simple),Urbana,2012,26,"8620,7765",,0.45
+América Latina (promedio simple),Nacional,2013,26,"8620,7765",,0.48
+América Latina (promedio simple),Rural,2013,26,"8620,7766",,0.45
+América Latina (promedio simple),Urbana,2013,26,"8620,7765",,0.46
+América Latina (promedio simple),Nacional,2014,26,"8620,7765",,0.47
+América Latina (promedio simple),Rural,2014,26,"8620,7766",,0.45
+América Latina (promedio simple),Urbana,2014,26,"8620,7765",,0.45
+América Latina (promedio simple),Nacional,2015,26,"8620,7765",,0.47
+América Latina (promedio simple),Rural,2015,26,"8620,7766",,0.44
+América Latina (promedio simple),Urbana,2015,26,"8620,7765",,0.45
+América Latina (promedio simple),Nacional,2016,26,"8620,7765",,0.47
+América Latina (promedio simple),Rural,2016,26,"8620,7766",,0.44
+América Latina (promedio simple),Urbana,2016,26,"8620,7765",,0.45
+América Latina (promedio simple),Nacional,2017,26,"8620,7765",,0.46
+América Latina (promedio simple),Rural,2017,26,"8620,7766",,0.44
+América Latina (promedio simple),Urbana,2017,26,"8620,7765",,0.44
+América Latina (promedio simple),Nacional,2018,26,"8620,7765",,0.46
+América Latina (promedio simple),Rural,2018,26,"8620,7766",,0.44
+América Latina (promedio simple),Urbana,2018,26,"8620,7765",,0.44
+América Latina (promedio simple),Nacional,2019,26,"8620,7765",,0.46
+América Latina (promedio simple),Rural,2019,26,"8620,7766",,0.44
+América Latina (promedio simple),Urbana,2019,26,"8620,7765",,0.44
+Argentina,Urbana,2000,26,923,ARG,0.487
+Argentina,Urbana,2001,26,923,ARG,0.505
+Argentina,Urbana,2002,26,923,ARG,0.498
+Argentina,Urbana,2003,26,337,ARG,0.467
+Argentina,Urbana,2004,26,337,ARG,0.438
+Argentina,Urbana,2005,26,337,ARG,0.429
+Argentina,Urbana,2006,26,337,ARG,0.443
+Argentina,Urbana,2007,26,337,ARG,0.437
+Argentina,Urbana,2008,26,337,ARG,0.413
+Argentina,Urbana,2009,26,337,ARG,0.413
+Argentina,Urbana,2010,26,337,ARG,0.412
+Argentina,Urbana,2011,26,337,ARG,0.406
+Argentina,Urbana,2012,26,337,ARG,0.389
+Argentina,Urbana,2013,26,337,ARG,0.389
+Argentina,Urbana,2014,26,337,ARG,0.391
+Argentina,Urbana,2016,26,337,ARG,0.393
+Argentina,Urbana,2017,26,337,ARG,0.388
+Argentina,Urbana,2018,26,337,ARG,0.396
+Argentina,Urbana,2019,26,337,ARG,0.4
+Bolivia (Estado Plurinacional de),Nacional,2000,26,,BOL,0.635
+Bolivia (Estado Plurinacional de),Rural,2000,26,,BOL,0.665
+Bolivia (Estado Plurinacional de),Urbana,2000,26,,BOL,0.554
+Bolivia (Estado Plurinacional de),Nacional,2001,26,,BOL,0.604
+Bolivia (Estado Plurinacional de),Rural,2001,26,,BOL,0.593
+Bolivia (Estado Plurinacional de),Urbana,2001,26,,BOL,0.539
+Bolivia (Estado Plurinacional de),Nacional,2002,26,,BOL,0.612
+Bolivia (Estado Plurinacional de),Rural,2002,26,,BOL,0.601
+Bolivia (Estado Plurinacional de),Urbana,2002,26,,BOL,0.543
+Bolivia (Estado Plurinacional de),Nacional,2004,26,,BOL,0.55
+Bolivia (Estado Plurinacional de),Rural,2004,26,,BOL,0.527
+Bolivia (Estado Plurinacional de),Urbana,2004,26,,BOL,0.509
+Bolivia (Estado Plurinacional de),Nacional,2005,26,,BOL,0.634
+Bolivia (Estado Plurinacional de),Rural,2005,26,,BOL,0.605
+Bolivia (Estado Plurinacional de),Urbana,2005,26,,BOL,0.587
+Bolivia (Estado Plurinacional de),Nacional,2006,26,,BOL,0.604
+Bolivia (Estado Plurinacional de),Rural,2006,26,,BOL,0.599
+Bolivia (Estado Plurinacional de),Urbana,2006,26,,BOL,0.55
+Bolivia (Estado Plurinacional de),Nacional,2007,26,,BOL,0.586
+Bolivia (Estado Plurinacional de),Rural,2007,26,,BOL,0.577
+Bolivia (Estado Plurinacional de),Urbana,2007,26,,BOL,0.541
+Bolivia (Estado Plurinacional de),Nacional,2008,26,,BOL,0.513
+Bolivia (Estado Plurinacional de),Rural,2008,26,,BOL,0.521
+Bolivia (Estado Plurinacional de),Urbana,2008,26,,BOL,0.465
+Bolivia (Estado Plurinacional de),Nacional,2009,26,,BOL,0.511
+Bolivia (Estado Plurinacional de),Rural,2009,26,,BOL,0.527
+Bolivia (Estado Plurinacional de),Urbana,2009,26,,BOL,0.461
+Bolivia (Estado Plurinacional de),Nacional,2011,26,,BOL,0.471
+Bolivia (Estado Plurinacional de),Rural,2011,26,,BOL,0.528
+Bolivia (Estado Plurinacional de),Urbana,2011,26,,BOL,0.417
+Bolivia (Estado Plurinacional de),Nacional,2012,26,,BOL,0.474
+Bolivia (Estado Plurinacional de),Rural,2012,26,,BOL,0.527
+Bolivia (Estado Plurinacional de),Urbana,2012,26,,BOL,0.422
+Bolivia (Estado Plurinacional de),Nacional,2013,26,,BOL,0.48
+Bolivia (Estado Plurinacional de),Rural,2013,26,,BOL,0.516
+Bolivia (Estado Plurinacional de),Urbana,2013,26,,BOL,0.423
+Bolivia (Estado Plurinacional de),Nacional,2014,26,,BOL,0.471
+Bolivia (Estado Plurinacional de),Rural,2014,26,,BOL,0.517
+Bolivia (Estado Plurinacional de),Urbana,2014,26,,BOL,0.419
+Bolivia (Estado Plurinacional de),Nacional,2015,26,,BOL,0.454
+Bolivia (Estado Plurinacional de),Rural,2015,26,,BOL,0.505
+Bolivia (Estado Plurinacional de),Urbana,2015,26,,BOL,0.404
+Bolivia (Estado Plurinacional de),Nacional,2016,26,,BOL,0.466
+Bolivia (Estado Plurinacional de),Rural,2016,26,,BOL,0.533
+Bolivia (Estado Plurinacional de),Urbana,2016,26,,BOL,0.41
+Bolivia (Estado Plurinacional de),Nacional,2017,26,,BOL,0.461
+Bolivia (Estado Plurinacional de),Rural,2017,26,,BOL,0.536
+Bolivia (Estado Plurinacional de),Urbana,2017,26,,BOL,0.403
+Bolivia (Estado Plurinacional de),Nacional,2018,26,,BOL,0.438
+Bolivia (Estado Plurinacional de),Rural,2018,26,,BOL,0.487
+Bolivia (Estado Plurinacional de),Urbana,2018,26,,BOL,0.383
+Bolivia (Estado Plurinacional de),Nacional,2019,26,,BOL,0.43
+Bolivia (Estado Plurinacional de),Rural,2019,26,,BOL,0.462
+Bolivia (Estado Plurinacional de),Urbana,2019,26,,BOL,0.393
+Brasil,Nacional,2001,26,8608,BRA,0.576
+Brasil,Rural,2001,26,8608,BRA,0.499
+Brasil,Urbana,2001,26,8608,BRA,0.565
+Brasil,Nacional,2002,26,8608,BRA,0.57
+Brasil,Rural,2002,26,8608,BRA,0.476
+Brasil,Urbana,2002,26,8608,BRA,0.56
+Brasil,Nacional,2003,26,8608,BRA,0.562
+Brasil,Rural,2003,26,8608,BRA,0.497
+Brasil,Urbana,2003,26,8608,BRA,0.553
+Brasil,Nacional,2004,26,8608,BRA,0.554
+Brasil,Rural,2004,26,8608,BRA,0.488
+Brasil,Urbana,2004,26,8608,BRA,0.544
+Brasil,Nacional,2005,26,8608,BRA,0.552
+Brasil,Rural,2005,26,8608,BRA,0.475
+Brasil,Urbana,2005,26,8608,BRA,0.543
+Brasil,Nacional,2006,26,8608,BRA,0.548
+Brasil,Rural,2006,26,8608,BRA,0.48
+Brasil,Urbana,2006,26,8608,BRA,0.539
+Brasil,Nacional,2007,26,8608,BRA,0.543
+Brasil,Rural,2007,26,8608,BRA,0.489
+Brasil,Urbana,2007,26,8608,BRA,0.533
+Brasil,Nacional,2008,26,8608,BRA,0.536
+Brasil,Rural,2008,26,8608,BRA,0.48
+Brasil,Urbana,2008,26,8608,BRA,0.527
+Brasil,Nacional,2009,26,8608,BRA,0.533
+Brasil,Rural,2009,26,8608,BRA,0.473
+Brasil,Urbana,2009,26,8608,BRA,0.525
+Brasil,Nacional,2011,26,8608,BRA,0.526
+Brasil,Rural,2011,26,8608,BRA,0.484
+Brasil,Urbana,2011,26,8608,BRA,0.517
+Brasil,Nacional,2012,26,8608,BRA,0.523
+Brasil,Rural,2012,26,8608,BRA,0.481
+Brasil,Urbana,2012,26,8608,BRA,0.514
+Brasil,Nacional,2013,26,8608,BRA,0.522
+Brasil,Rural,2013,26,8608,BRA,0.492
+Brasil,Urbana,2013,26,8608,BRA,0.513
+Brasil,Nacional,2014,26,8608,BRA,0.514
+Brasil,Rural,2014,26,8608,BRA,0.467
+Brasil,Urbana,2014,26,8608,BRA,0.507
+Brasil,Nacional,2015,26,8608,BRA,0.511
+Brasil,Rural,2015,26,8608,BRA,0.46
+Brasil,Urbana,2015,26,8608,BRA,0.505
+Brasil,Nacional,2016,26,8609,BRA,0.532
+Brasil,Rural,2016,26,8609,BRA,0.485
+Brasil,Urbana,2016,26,8609,BRA,0.524
+Brasil,Nacional,2017,26,8609,BRA,0.533
+Brasil,Rural,2017,26,8609,BRA,0.488
+Brasil,Urbana,2017,26,8609,BRA,0.526
+Brasil,Nacional,2018,26,8609,BRA,0.54
+Brasil,Rural,2018,26,8609,BRA,0.496
+Brasil,Urbana,2018,26,8609,BRA,0.532
+Brasil,Nacional,2019,26,8609,BRA,0.538
+Brasil,Rural,2019,26,8609,BRA,0.491
+Brasil,Urbana,2019,26,8609,BRA,0.53
+Chile,Nacional,2000,26,,CHL,0.514
+Chile,Rural,2000,26,,CHL,0.451
+Chile,Urbana,2000,26,,CHL,0.507
+Chile,Nacional,2003,26,,CHL,0.507
+Chile,Rural,2003,26,,CHL,0.458
+Chile,Urbana,2003,26,,CHL,0.502
+Chile,Nacional,2006,26,,CHL,0.483
+Chile,Rural,2006,26,,CHL,0.448
+Chile,Urbana,2006,26,,CHL,0.477
+Chile,Nacional,2009,26,,CHL,0.478
+Chile,Rural,2009,26,,CHL,0.41
+Chile,Urbana,2009,26,,CHL,0.478
+Chile,Nacional,2011,26,,CHL,0.469
+Chile,Rural,2011,26,,CHL,0.413
+Chile,Urbana,2011,26,,CHL,0.468
+Chile,Nacional,2013,26,,CHL,0.466
+Chile,Rural,2013,26,,CHL,0.405
+Chile,Urbana,2013,26,,CHL,0.465
+Chile,Nacional,2015,26,,CHL,0.453
+Chile,Rural,2015,26,,CHL,0.394
+Chile,Urbana,2015,26,,CHL,0.452
+Chile,Nacional,2017,26,,CHL,0.454
+Chile,Rural,2017,26,,CHL,0.43
+Chile,Urbana,2017,26,,CHL,0.451
+Colombia,Nacional,2002,26,"8610,6544",COL,0.567
+Colombia,Rural,2002,26,"8610,6544",COL,0.523
+Colombia,Urbana,2002,26,"8610,6544",COL,0.546
+Colombia,Nacional,2003,26,"8610,6544",COL,0.549
+Colombia,Rural,2003,26,"8610,6544",COL,0.467
+Colombia,Urbana,2003,26,"8610,6544",COL,0.532
+Colombia,Nacional,2004,26,"8610,6544",COL,0.554
+Colombia,Rural,2004,26,"8610,6544",COL,0.441
+Colombia,Urbana,2004,26,"8610,6544",COL,0.536
+Colombia,Nacional,2005,26,"8610,6544",COL,0.55
+Colombia,Rural,2005,26,"8610,6544",COL,0.461
+Colombia,Urbana,2005,26,"8610,6544",COL,0.53
+Colombia,Nacional,2008,26,"8611,6544",COL,0.572
+Colombia,Rural,2008,26,"8611,6544",COL,0.494
+Colombia,Urbana,2008,26,"8611,6544",COL,0.547
+Colombia,Nacional,2009,26,"8611,6544",COL,0.557
+Colombia,Rural,2009,26,"8611,6544",COL,0.473
+Colombia,Urbana,2009,26,"8611,6544",COL,0.535
+Colombia,Nacional,2010,26,"8611,6544",COL,0.56
+Colombia,Rural,2010,26,"8611,6544",COL,0.474
+Colombia,Urbana,2010,26,"8611,6544",COL,0.538
+Colombia,Nacional,2011,26,"8611,6544",COL,0.549
+Colombia,Rural,2011,26,"8611,6544",COL,0.462
+Colombia,Urbana,2011,26,"8611,6544",COL,0.527
+Colombia,Nacional,2012,26,"8611,6544",COL,0.539
+Colombia,Rural,2012,26,"8611,6544",COL,0.469
+Colombia,Urbana,2012,26,"8611,6544",COL,0.515
+Colombia,Nacional,2013,26,"8611,6544",COL,0.54
+Colombia,Rural,2013,26,"8611,6544",COL,0.452
+Colombia,Urbana,2013,26,"8611,6544",COL,0.519
+Colombia,Nacional,2014,26,"8611,6544",COL,0.54
+Colombia,Rural,2014,26,"8611,6544",COL,0.468
+Colombia,Urbana,2014,26,"8611,6544",COL,0.517
+Colombia,Nacional,2015,26,"8611,6544",COL,0.524
+Colombia,Rural,2015,26,"8611,6544",COL,0.458
+Colombia,Urbana,2015,26,"8611,6544",COL,0.501
+Colombia,Nacional,2016,26,"8611,6544",COL,0.521
+Colombia,Rural,2016,26,"8611,6544",COL,0.463
+Colombia,Urbana,2016,26,"8611,6544",COL,0.5
+Colombia,Nacional,2017,26,"8611,6544",COL,0.511
+Colombia,Rural,2017,26,"8611,6544",COL,0.46
+Colombia,Urbana,2017,26,"8611,6544",COL,0.493
+Colombia,Nacional,2018,26,"8611,6544",COL,0.52
+Colombia,Rural,2018,26,"8611,6544",COL,0.449
+Colombia,Urbana,2018,26,"8611,6544",COL,0.503
+Colombia,Nacional,2019,26,"8611,6544",COL,0.529
+Colombia,Rural,2019,26,"8611,6544",COL,0.462
+Colombia,Urbana,2019,26,"8611,6544",COL,0.51
+Costa Rica,Nacional,2000,26,8612,CRI,0.479
+Costa Rica,Rural,2000,26,8612,CRI,0.455
+Costa Rica,Urbana,2000,26,8612,CRI,0.454
+Costa Rica,Nacional,2001,26,8612,CRI,0.499
+Costa Rica,Rural,2001,26,8612,CRI,0.48
+Costa Rica,Urbana,2001,26,8612,CRI,0.47
+Costa Rica,Nacional,2002,26,8612,CRI,0.497
+Costa Rica,Rural,2002,26,8612,CRI,0.485
+Costa Rica,Urbana,2002,26,8612,CRI,0.469
+Costa Rica,Nacional,2003,26,8612,CRI,0.482
+Costa Rica,Rural,2003,26,8612,CRI,0.461
+Costa Rica,Urbana,2003,26,8612,CRI,0.456
+Costa Rica,Nacional,2004,26,8612,CRI,0.486
+Costa Rica,Rural,2004,26,8612,CRI,0.456
+Costa Rica,Urbana,2004,26,8612,CRI,0.465
+Costa Rica,Nacional,2005,26,8612,CRI,0.476
+Costa Rica,Rural,2005,26,8612,CRI,0.449
+Costa Rica,Urbana,2005,26,8612,CRI,0.457
+Costa Rica,Nacional,2006,26,8612,CRI,0.489
+Costa Rica,Rural,2006,26,8612,CRI,0.461
+Costa Rica,Urbana,2006,26,8612,CRI,0.472
+Costa Rica,Nacional,2007,26,8612,CRI,0.498
+Costa Rica,Rural,2007,26,8612,CRI,0.456
+Costa Rica,Urbana,2007,26,8612,CRI,0.487
+Costa Rica,Nacional,2008,26,8612,CRI,0.491
+Costa Rica,Rural,2008,26,8612,CRI,0.457
+Costa Rica,Urbana,2008,26,8612,CRI,0.477
+Costa Rica,Nacional,2009,26,8612,CRI,0.512
+Costa Rica,Rural,2009,26,8612,CRI,0.48
+Costa Rica,Urbana,2009,26,8612,CRI,0.498
+Costa Rica,Nacional,2010,26,8613,CRI,0.492
+Costa Rica,Rural,2010,26,8613,CRI,0.483
+Costa Rica,Urbana,2010,26,8613,CRI,0.467
+Costa Rica,Nacional,2011,26,8613,CRI,0.5
+Costa Rica,Rural,2011,26,8613,CRI,0.474
+Costa Rica,Urbana,2011,26,8613,CRI,0.481
+Costa Rica,Nacional,2012,26,8613,CRI,0.502
+Costa Rica,Rural,2012,26,8613,CRI,0.478
+Costa Rica,Urbana,2012,26,8613,CRI,0.48
+Costa Rica,Nacional,2013,26,8613,CRI,0.508
+Costa Rica,Rural,2013,26,8613,CRI,0.477
+Costa Rica,Urbana,2013,26,8613,CRI,0.486
+Costa Rica,Nacional,2014,26,8613,CRI,0.498
+Costa Rica,Rural,2014,26,8613,CRI,0.486
+Costa Rica,Urbana,2014,26,8613,CRI,0.48
+Costa Rica,Nacional,2015,26,8613,CRI,0.496
+Costa Rica,Rural,2015,26,8613,CRI,0.493
+Costa Rica,Urbana,2015,26,8613,CRI,0.478
+Costa Rica,Nacional,2016,26,8613,CRI,0.5
+Costa Rica,Rural,2016,26,8613,CRI,0.476
+Costa Rica,Urbana,2016,26,8613,CRI,0.485
+Costa Rica,Nacional,2017,26,8613,CRI,0.496
+Costa Rica,Rural,2017,26,8613,CRI,0.469
+Costa Rica,Urbana,2017,26,8613,CRI,0.483
+Costa Rica,Nacional,2018,26,8613,CRI,0.493
+Costa Rica,Rural,2018,26,8613,CRI,0.471
+Costa Rica,Urbana,2018,26,8613,CRI,0.479
+Costa Rica,Nacional,2019,26,8613,CRI,0.495
+Costa Rica,Rural,2019,26,8613,CRI,0.459
+Costa Rica,Urbana,2019,26,8613,CRI,0.486
+Ecuador,Nacional,2001,26,,ECU,0.538
+Ecuador,Rural,2001,26,,ECU,0.474
+Ecuador,Urbana,2001,26,,ECU,0.534
+Ecuador,Nacional,2003,26,,ECU,0.601
+Ecuador,Rural,2003,26,,ECU,0.464
+Ecuador,Urbana,2003,26,,ECU,0.604
+Ecuador,Nacional,2005,26,,ECU,0.522
+Ecuador,Rural,2005,26,,ECU,0.455
+Ecuador,Urbana,2005,26,,ECU,0.504
+Ecuador,Nacional,2006,26,,ECU,0.52
+Ecuador,Rural,2006,26,,ECU,0.474
+Ecuador,Urbana,2006,26,,ECU,0.498
+Ecuador,Nacional,2007,26,,ECU,0.534
+Ecuador,Rural,2007,26,,ECU,0.471
+Ecuador,Urbana,2007,26,,ECU,0.511
+Ecuador,Nacional,2008,26,,ECU,0.496
+Ecuador,Rural,2008,26,,ECU,0.45
+Ecuador,Urbana,2008,26,,ECU,0.47
+Ecuador,Nacional,2009,26,,ECU,0.485
+Ecuador,Rural,2009,26,,ECU,0.426
+Ecuador,Urbana,2009,26,,ECU,0.469
+Ecuador,Nacional,2010,26,,ECU,0.49
+Ecuador,Rural,2010,26,,ECU,0.414
+Ecuador,Urbana,2010,26,,ECU,0.478
+Ecuador,Nacional,2011,26,,ECU,0.458
+Ecuador,Rural,2011,26,,ECU,0.435
+Ecuador,Urbana,2011,26,,ECU,0.43
+Ecuador,Nacional,2012,26,,ECU,0.468
+Ecuador,Rural,2012,26,,ECU,0.432
+Ecuador,Urbana,2012,26,,ECU,0.442
+Ecuador,Nacional,2013,26,,ECU,0.47
+Ecuador,Rural,2013,26,,ECU,0.42
+Ecuador,Urbana,2013,26,,ECU,0.46
+Ecuador,Nacional,2014,26,,ECU,0.449
+Ecuador,Rural,2014,26,,ECU,0.422
+Ecuador,Urbana,2014,26,,ECU,0.442
+Ecuador,Nacional,2015,26,,ECU,0.462
+Ecuador,Rural,2015,26,,ECU,0.454
+Ecuador,Urbana,2015,26,,ECU,0.445
+Ecuador,Nacional,2016,26,,ECU,0.45
+Ecuador,Rural,2016,26,,ECU,0.431
+Ecuador,Urbana,2016,26,,ECU,0.438
+Ecuador,Nacional,2017,26,,ECU,0.444
+Ecuador,Rural,2017,26,,ECU,0.438
+Ecuador,Urbana,2017,26,,ECU,0.425
+Ecuador,Nacional,2018,26,,ECU,0.454
+Ecuador,Rural,2018,26,,ECU,0.419
+Ecuador,Urbana,2018,26,,ECU,0.442
+Ecuador,Nacional,2019,26,,ECU,0.456
+Ecuador,Rural,2019,26,,ECU,0.42
+Ecuador,Urbana,2019,26,,ECU,0.441
+El Salvador,Nacional,2000,26,,SLV,0.509
+El Salvador,Rural,2000,26,,SLV,0.428
+El Salvador,Urbana,2000,26,,SLV,0.472
+El Salvador,Nacional,2001,26,,SLV,0.514
+El Salvador,Rural,2001,26,,SLV,0.45
+El Salvador,Urbana,2001,26,,SLV,0.478
+El Salvador,Nacional,2002,26,,SLV,0.508
+El Salvador,Rural,2002,26,,SLV,0.45
+El Salvador,Urbana,2002,26,,SLV,0.473
+El Salvador,Nacional,2003,26,,SLV,0.501
+El Salvador,Rural,2003,26,,SLV,0.438
+El Salvador,Urbana,2003,26,,SLV,0.466
+El Salvador,Nacional,2004,26,,SLV,0.483
+El Salvador,Rural,2004,26,,SLV,0.418
+El Salvador,Urbana,2004,26,,SLV,0.453
+El Salvador,Nacional,2005,26,,SLV,0.504
+El Salvador,Rural,2005,26,,SLV,0.472
+El Salvador,Urbana,2005,26,,SLV,0.463
+El Salvador,Nacional,2006,26,,SLV,0.474
+El Salvador,Rural,2006,26,,SLV,0.399
+El Salvador,Urbana,2006,26,,SLV,0.453
+El Salvador,Nacional,2007,26,,SLV,0.47
+El Salvador,Rural,2007,26,,SLV,0.391
+El Salvador,Urbana,2007,26,,SLV,0.445
+El Salvador,Nacional,2009,26,,SLV,0.478
+El Salvador,Rural,2009,26,,SLV,0.407
+El Salvador,Urbana,2009,26,,SLV,0.453
+El Salvador,Nacional,2010,26,,SLV,0.454
+El Salvador,Rural,2010,26,,SLV,0.39
+El Salvador,Urbana,2010,26,,SLV,0.427
+El Salvador,Nacional,2012,26,,SLV,0.438
+El Salvador,Rural,2012,26,,SLV,0.381
+El Salvador,Urbana,2012,26,,SLV,0.415
+El Salvador,Nacional,2013,26,,SLV,0.453
+El Salvador,Rural,2013,26,,SLV,0.386
+El Salvador,Urbana,2013,26,,SLV,0.434
+El Salvador,Nacional,2014,26,,SLV,0.434
+El Salvador,Rural,2014,26,,SLV,0.384
+El Salvador,Urbana,2014,26,,SLV,0.41
+El Salvador,Nacional,2015,26,,SLV,0.426
+El Salvador,Rural,2015,26,,SLV,0.377
+El Salvador,Urbana,2015,26,,SLV,0.409
+El Salvador,Nacional,2016,26,,SLV,0.42
+El Salvador,Rural,2016,26,,SLV,0.375
+El Salvador,Urbana,2016,26,,SLV,0.396
+El Salvador,Nacional,2017,26,,SLV,0.399
+El Salvador,Rural,2017,26,,SLV,0.36
+El Salvador,Urbana,2017,26,,SLV,0.377
+El Salvador,Nacional,2018,26,,SLV,0.405
+El Salvador,Rural,2018,26,,SLV,0.365
+El Salvador,Urbana,2018,26,,SLV,0.383
+El Salvador,Nacional,2019,26,,SLV,0.406
+El Salvador,Rural,2019,26,,SLV,0.357
+El Salvador,Urbana,2019,26,,SLV,0.39
+Guatemala,Nacional,2000,26,,GTM,0.636
+Guatemala,Rural,2000,26,,GTM,0.604
+Guatemala,Urbana,2000,26,,GTM,0.565
+Guatemala,Nacional,2006,26,,GTM,0.558
+Guatemala,Rural,2006,26,,GTM,0.503
+Guatemala,Urbana,2006,26,,GTM,0.51
+Guatemala,Nacional,2014,26,,GTM,0.535
+Guatemala,Rural,2014,26,,GTM,0.466
+Guatemala,Urbana,2014,26,,GTM,0.51
+Honduras,Nacional,2001,26,355,HND,0.532
+Honduras,Rural,2001,26,355,HND,0.506
+Honduras,Urbana,2001,26,355,HND,0.475
+Honduras,Nacional,2004,26,355,HND,0.565
+Honduras,Rural,2004,26,355,HND,0.551
+Honduras,Urbana,2004,26,355,HND,0.5
+Honduras,Nacional,2005,26,355,HND,0.568
+Honduras,Rural,2005,26,355,HND,0.552
+Honduras,Urbana,2005,26,355,HND,0.505
+Honduras,Nacional,2009,26,355,HND,0.502
+Honduras,Rural,2009,26,355,HND,0.467
+Honduras,Urbana,2009,26,355,HND,0.449
+Honduras,Nacional,2010,26,355,HND,0.519
+Honduras,Rural,2010,26,355,HND,0.482
+Honduras,Urbana,2010,26,355,HND,0.471
+Honduras,Nacional,2011,26,355,HND,0.551
+Honduras,Rural,2011,26,355,HND,0.563
+Honduras,Urbana,2011,26,355,HND,0.496
+Honduras,Nacional,2012,26,355,HND,0.552
+Honduras,Rural,2012,26,355,HND,0.527
+Honduras,Urbana,2012,26,355,HND,0.518
+Honduras,Nacional,2013,26,355,HND,0.515
+Honduras,Rural,2013,26,355,HND,0.48
+Honduras,Urbana,2013,26,355,HND,0.479
+Honduras,Nacional,2014,26,8615,HND,0.481
+Honduras,Rural,2014,26,8615,HND,0.409
+Honduras,Urbana,2014,26,8615,HND,0.465
+Honduras,Nacional,2015,26,8615,HND,0.469
+Honduras,Rural,2015,26,8615,HND,0.441
+Honduras,Urbana,2015,26,8615,HND,0.443
+Honduras,Nacional,2016,26,8615,HND,0.48
+Honduras,Rural,2016,26,8615,HND,0.447
+Honduras,Urbana,2016,26,8615,HND,0.452
+Honduras,Nacional,2018,26,8615,HND,0.481
+Honduras,Rural,2018,26,8615,HND,0.437
+Honduras,Urbana,2018,26,8615,HND,0.438
+Honduras,Nacional,2019,26,8615,HND,0.494
+Honduras,Rural,2019,26,8615,HND,0.46
+Honduras,Urbana,2019,26,8615,HND,0.438
+México,Nacional,2000,26,,MEX,0.528
+México,Rural,2000,26,,MEX,0.473
+México,Urbana,2000,26,,MEX,0.493
+México,Nacional,2002,26,,MEX,0.506
+México,Rural,2002,26,,MEX,0.499
+México,Urbana,2002,26,,MEX,0.476
+México,Nacional,2004,26,,MEX,0.505
+México,Rural,2004,26,,MEX,0.453
+México,Urbana,2004,26,,MEX,0.487
+México,Nacional,2006,26,,MEX,0.5
+México,Rural,2006,26,,MEX,0.471
+México,Urbana,2006,26,,MEX,0.484
+México,Nacional,2008,26,,MEX,0.513
+México,Rural,2008,26,,MEX,0.468
+México,Urbana,2008,26,,MEX,0.488
+México,Nacional,2010,26,,MEX,0.51
+México,Rural,2010,26,,MEX,0.47
+México,Urbana,2010,26,,MEX,0.486
+México,Nacional,2012,26,,MEX,0.499
+México,Rural,2012,26,,MEX,0.465
+México,Urbana,2012,26,,MEX,0.478
+México,Nacional,2014,26,,MEX,0.502
+México,Rural,2014,26,,MEX,0.45
+México,Urbana,2014,26,,MEX,0.486
+México,Nacional,2016,26,,MEX,0.504
+México,Rural,2016,26,,MEX,0.442
+México,Urbana,2016,26,,MEX,0.49
+México,Nacional,2018,26,,MEX,0.475
+México,Rural,2018,26,,MEX,0.437
+México,Urbana,2018,26,,MEX,0.458
+Nicaragua,Nacional,2001,26,,NIC,0.568
+Nicaragua,Rural,2001,26,,NIC,0.496
+Nicaragua,Urbana,2001,26,,NIC,0.545
+Nicaragua,Nacional,2005,26,,NIC,0.526
+Nicaragua,Rural,2005,26,,NIC,0.489
+Nicaragua,Urbana,2005,26,,NIC,0.492
+Nicaragua,Nacional,2009,26,,NIC,0.463
+Nicaragua,Rural,2009,26,,NIC,0.445
+Nicaragua,Urbana,2009,26,,NIC,0.429
+Nicaragua,Nacional,2014,26,,NIC,0.495
+Nicaragua,Rural,2014,26,,NIC,0.445
+Nicaragua,Urbana,2014,26,,NIC,0.463
+Panamá,Nacional,2000,26,10359,PAN,0.564
+Panamá,Rural,2000,26,10359,PAN,0.53
+Panamá,Urbana,2000,26,10359,PAN,0.524
+Panamá,Nacional,2001,26,10359,PAN,0.575
+Panamá,Rural,2001,26,10359,PAN,0.557
+Panamá,Urbana,2001,26,10359,PAN,0.515
+Panamá,Nacional,2002,26,10359,PAN,0.572
+Panamá,Rural,2002,26,10359,PAN,0.55
+Panamá,Urbana,2002,26,10359,PAN,0.518
+Panamá,Nacional,2003,26,10359,PAN,0.569
+Panamá,Rural,2003,26,10359,PAN,0.546
+Panamá,Urbana,2003,26,10359,PAN,0.514
+Panamá,Nacional,2004,26,10359,PAN,0.563
+Panamá,Rural,2004,26,10359,PAN,0.548
+Panamá,Urbana,2004,26,10359,PAN,0.506
+Panamá,Nacional,2005,26,10359,PAN,0.55
+Panamá,Rural,2005,26,10359,PAN,0.53
+Panamá,Urbana,2005,26,10359,PAN,0.497
+Panamá,Nacional,2006,26,10359,PAN,0.562
+Panamá,Rural,2006,26,10359,PAN,0.555
+Panamá,Urbana,2006,26,10359,PAN,0.505
+Panamá,Nacional,2007,26,10359,PAN,0.539
+Panamá,Rural,2007,26,10359,PAN,0.536
+Panamá,Urbana,2007,26,10359,PAN,0.483
+Panamá,Nacional,2008,26,10359,PAN,0.528
+Panamá,Rural,2008,26,10359,PAN,0.538
+Panamá,Urbana,2008,26,10359,PAN,0.47
+Panamá,Nacional,2009,26,10359,PAN,0.53
+Panamá,Rural,2009,26,10359,PAN,0.502
+Panamá,Urbana,2009,26,10359,PAN,0.481
+Panamá,Nacional,2011,26,10359,PAN,0.528
+Panamá,Rural,2011,26,10359,PAN,0.507
+Panamá,Urbana,2011,26,10359,PAN,0.482
+Panamá,Nacional,2013,26,10359,PAN,0.524
+Panamá,Rural,2013,26,10359,PAN,0.515
+Panamá,Urbana,2013,26,10359,PAN,0.474
+Panamá,Nacional,2014,26,10360,PAN,0.502
+Panamá,Rural,2014,26,10360,PAN,0.502
+Panamá,Urbana,2014,26,10360,PAN,0.452
+Panamá,Nacional,2015,26,10360,PAN,0.499
+Panamá,Rural,2015,26,10360,PAN,0.534
+Panamá,Urbana,2015,26,10360,PAN,0.441
+Panamá,Nacional,2016,26,10360,PAN,0.495
+Panamá,Rural,2016,26,10360,PAN,0.486
+Panamá,Urbana,2016,26,10360,PAN,0.452
+Panamá,Nacional,2017,26,10360,PAN,0.505
+Panamá,Rural,2017,26,10360,PAN,0.515
+Panamá,Urbana,2017,26,10360,PAN,0.46
+Panamá,Nacional,2018,26,10360,PAN,0.501
+Panamá,Rural,2018,26,10360,PAN,0.512
+Panamá,Urbana,2018,26,10360,PAN,0.456
+Panamá,Nacional,2019,26,10360,PAN,0.506
+Panamá,Rural,2019,26,10360,PAN,0.515
+Panamá,Urbana,2019,26,10360,PAN,0.465
+Paraguay,Nacional,2001,26,9572,PRY,0.561
+Paraguay,Rural,2001,26,9572,PRY,0.532
+Paraguay,Urbana,2001,26,9572,PRY,0.507
+Paraguay,Nacional,2002,26,9572,PRY,0.584
+Paraguay,Rural,2002,26,9572,PRY,0.655
+Paraguay,Urbana,2002,26,9572,PRY,0.501
+Paraguay,Nacional,2003,26,9572,PRY,0.56
+Paraguay,Rural,2003,26,9572,PRY,0.564
+Paraguay,Urbana,2003,26,9572,PRY,0.527
+Paraguay,Nacional,2004,26,9572,PRY,0.532
+Paraguay,Rural,2004,26,9572,PRY,0.536
+Paraguay,Urbana,2004,26,9572,PRY,0.496
+Paraguay,Nacional,2005,26,337,PRY,0.524
+Paraguay,Rural,2005,26,337,PRY,0.499
+Paraguay,Urbana,2005,26,337,PRY,0.509
+Paraguay,Nacional,2006,26,337,PRY,0.534
+Paraguay,Rural,2006,26,337,PRY,0.511
+Paraguay,Urbana,2006,26,337,PRY,0.504
+Paraguay,Nacional,2007,26,337,PRY,0.536
+Paraguay,Rural,2007,26,337,PRY,0.574
+Paraguay,Urbana,2007,26,337,PRY,0.482
+Paraguay,Nacional,2008,26,337,PRY,0.516
+Paraguay,Rural,2008,26,337,PRY,0.548
+Paraguay,Urbana,2008,26,337,PRY,0.463
+Paraguay,Nacional,2009,26,337,PRY,0.503
+Paraguay,Rural,2009,26,337,PRY,0.555
+Paraguay,Urbana,2009,26,337,PRY,0.434
+Paraguay,Nacional,2010,26,337,PRY,0.527
+Paraguay,Rural,2010,26,337,PRY,0.552
+Paraguay,Urbana,2010,26,337,PRY,0.471
+Paraguay,Nacional,2011,26,337,PRY,0.535
+Paraguay,Rural,2011,26,337,PRY,0.573
+Paraguay,Urbana,2011,26,337,PRY,0.482
+Paraguay,Nacional,2012,26,337,PRY,0.489
+Paraguay,Rural,2012,26,337,PRY,0.52
+Paraguay,Urbana,2012,26,337,PRY,0.426
+Paraguay,Nacional,2013,26,337,PRY,0.495
+Paraguay,Rural,2013,26,337,PRY,0.491
+Paraguay,Urbana,2013,26,337,PRY,0.462
+Paraguay,Nacional,2014,26,337,PRY,0.522
+Paraguay,Rural,2014,26,337,PRY,0.563
+Paraguay,Urbana,2014,26,337,PRY,0.476
+Paraguay,Nacional,2015,26,337,PRY,0.494
+Paraguay,Rural,2015,26,337,PRY,0.467
+Paraguay,Urbana,2015,26,337,PRY,0.462
+Paraguay,Nacional,2016,26,337,PRY,0.497
+Paraguay,Rural,2016,26,337,PRY,0.504
+Paraguay,Urbana,2016,26,337,PRY,0.456
+Paraguay,Nacional,2017,26,,PRY,0.503
+Paraguay,Rural,2017,26,,PRY,0.504
+Paraguay,Urbana,2017,26,,PRY,0.473
+Paraguay,Nacional,2018,26,,PRY,0.474
+Paraguay,Rural,2018,26,,PRY,0.492
+Paraguay,Urbana,2018,26,,PRY,0.434
+Paraguay,Nacional,2019,26,,PRY,0.473
+Paraguay,Rural,2019,26,,PRY,0.485
+Paraguay,Urbana,2019,26,,PRY,0.436
+Perú,Nacional,2000,26,8647,PER,0.492
+Perú,Rural,2000,26,8647,PER,0.428
+Perú,Urbana,2000,26,8647,PER,0.422
+Perú,Nacional,2001,26,8647,PER,0.519
+Perú,Rural,2001,26,8647,PER,0.443
+Perú,Urbana,2001,26,8647,PER,0.469
+Perú,Nacional,2002,26,8647,PER,0.544
+Perú,Rural,2002,26,8647,PER,0.438
+Perú,Urbana,2002,26,8647,PER,0.498
+Perú,Nacional,2003,26,8648,PER,0.548
+Perú,Rural,2003,26,8648,PER,0.38
+Perú,Urbana,2003,26,8648,PER,0.511
+Perú,Nacional,2004,26,8649,PER,0.51
+Perú,Rural,2004,26,8649,PER,0.428
+Perú,Urbana,2004,26,8649,PER,0.458
+Perú,Nacional,2005,26,8649,PER,0.525
+Perú,Rural,2005,26,8649,PER,0.436
+Perú,Urbana,2005,26,8649,PER,0.481
+Perú,Nacional,2006,26,8649,PER,0.517
+Perú,Rural,2006,26,8649,PER,0.434
+Perú,Urbana,2006,26,8649,PER,0.467
+Perú,Nacional,2007,26,8649,PER,0.518
+Perú,Rural,2007,26,8649,PER,0.45
+Perú,Urbana,2007,26,8649,PER,0.466
+Perú,Nacional,2008,26,8649,PER,0.495
+Perú,Rural,2008,26,8649,PER,0.456
+Perú,Urbana,2008,26,8649,PER,0.442
+Perú,Nacional,2009,26,8649,PER,0.488
+Perú,Rural,2009,26,8649,PER,0.437
+Perú,Urbana,2009,26,8649,PER,0.442
+Perú,Nacional,2010,26,8649,PER,0.471
+Perú,Rural,2010,26,8649,PER,0.428
+Perú,Urbana,2010,26,8649,PER,0.425
+Perú,Nacional,2011,26,8649,PER,0.463
+Perú,Rural,2011,26,8649,PER,0.445
+Perú,Urbana,2011,26,8649,PER,0.417
+Perú,Nacional,2012,26,8649,PER,0.457
+Perú,Rural,2012,26,8649,PER,0.441
+Perú,Urbana,2012,26,8649,PER,0.411
+Perú,Nacional,2013,26,8649,PER,0.453
+Perú,Rural,2013,26,8649,PER,0.432
+Perú,Urbana,2013,26,8649,PER,0.41
+Perú,Nacional,2014,26,8649,PER,0.446
+Perú,Rural,2014,26,8649,PER,0.422
+Perú,Urbana,2014,26,8649,PER,0.405
+Perú,Nacional,2015,26,8649,PER,0.449
+Perú,Rural,2015,26,8649,PER,0.422
+Perú,Urbana,2015,26,8649,PER,0.409
+Perú,Nacional,2016,26,8649,PER,0.452
+Perú,Rural,2016,26,8649,PER,0.419
+Perú,Urbana,2016,26,8649,PER,0.412
+Perú,Nacional,2017,26,8649,PER,0.448
+Perú,Rural,2017,26,8649,PER,0.413
+Perú,Urbana,2017,26,8649,PER,0.407
+Perú,Nacional,2018,26,8649,PER,0.439
+Perú,Rural,2018,26,8649,PER,0.4
+Perú,Urbana,2018,26,8649,PER,0.403
+Perú,Nacional,2019,26,8649,PER,0.429
+Perú,Rural,2019,26,8649,PER,0.398
+Perú,Urbana,2019,26,8649,PER,0.395
+República Dominicana,Nacional,2000,26,8618,DOM,0.51
+República Dominicana,Rural,2000,26,8618,DOM,0.456
+República Dominicana,Urbana,2000,26,8618,DOM,0.5
+República Dominicana,Nacional,2001,26,8618,DOM,0.495
+República Dominicana,Rural,2001,26,8618,DOM,0.419
+República Dominicana,Urbana,2001,26,8618,DOM,0.49
+República Dominicana,Nacional,2002,26,8618,DOM,0.498
+República Dominicana,Rural,2002,26,8618,DOM,0.427
+República Dominicana,Urbana,2002,26,8618,DOM,0.491
+República Dominicana,Nacional,2003,26,8618,DOM,0.506
+República Dominicana,Rural,2003,26,8618,DOM,0.426
+República Dominicana,Urbana,2003,26,8618,DOM,0.512
+República Dominicana,Nacional,2004,26,8618,DOM,0.504
+República Dominicana,Rural,2004,26,8618,DOM,0.412
+República Dominicana,Urbana,2004,26,8618,DOM,0.513
+República Dominicana,Nacional,2005,26,8618,DOM,0.507
+República Dominicana,Rural,2005,26,8618,DOM,0.456
+República Dominicana,Urbana,2005,26,8618,DOM,0.508
+República Dominicana,Nacional,2006,26,8618,DOM,0.525
+República Dominicana,Rural,2006,26,8618,DOM,0.475
+República Dominicana,Urbana,2006,26,8618,DOM,0.523
+República Dominicana,Nacional,2007,26,8618,DOM,0.495
+República Dominicana,Rural,2007,26,8618,DOM,0.434
+República Dominicana,Urbana,2007,26,8618,DOM,0.499
+República Dominicana,Nacional,2008,26,8618,DOM,0.489
+República Dominicana,Rural,2008,26,8618,DOM,0.409
+República Dominicana,Urbana,2008,26,8618,DOM,0.491
+República Dominicana,Nacional,2009,26,8618,DOM,0.496
+República Dominicana,Rural,2009,26,8618,DOM,0.413
+República Dominicana,Urbana,2009,26,8618,DOM,0.501
+República Dominicana,Nacional,2010,26,8618,DOM,0.48
+República Dominicana,Rural,2010,26,8618,DOM,0.411
+República Dominicana,Urbana,2010,26,8618,DOM,0.483
+República Dominicana,Nacional,2011,26,8618,DOM,0.484
+República Dominicana,Rural,2011,26,8618,DOM,0.41
+República Dominicana,Urbana,2011,26,8618,DOM,0.487
+República Dominicana,Nacional,2012,26,8618,DOM,0.469
+República Dominicana,Rural,2012,26,8618,DOM,0.39
+República Dominicana,Urbana,2012,26,8618,DOM,0.473
+República Dominicana,Nacional,2013,26,8618,DOM,0.484
+República Dominicana,Rural,2013,26,8618,DOM,0.388
+República Dominicana,Urbana,2013,26,8618,DOM,0.489
+República Dominicana,Nacional,2014,26,8618,DOM,0.449
+República Dominicana,Rural,2014,26,8618,DOM,0.402
+República Dominicana,Urbana,2014,26,8618,DOM,0.446
+República Dominicana,Nacional,2015,26,8618,DOM,0.457
+República Dominicana,Rural,2015,26,8618,DOM,0.398
+República Dominicana,Urbana,2015,26,8618,DOM,0.458
+República Dominicana,Nacional,2016,26,8618,DOM,0.435
+República Dominicana,Rural,2016,26,8618,DOM,0.388
+República Dominicana,Urbana,2016,26,8618,DOM,0.439
+República Dominicana,Nacional,2017,26,8619,DOM,0.433
+República Dominicana,Rural,2017,26,8619,DOM,0.379
+República Dominicana,Urbana,2017,26,8619,DOM,0.439
+República Dominicana,Nacional,2018,26,8619,DOM,0.441
+República Dominicana,Rural,2018,26,8619,DOM,0.37
+República Dominicana,Urbana,2018,26,8619,DOM,0.449
+República Dominicana,Nacional,2019,26,8619,DOM,0.432
+República Dominicana,Rural,2019,26,8619,DOM,0.373
+República Dominicana,Urbana,2019,26,8619,DOM,0.437
+Uruguay,Urbana,2000,26,,URY,0.441
+Uruguay,Urbana,2001,26,,URY,0.464
+Uruguay,Urbana,2002,26,,URY,0.474
+Uruguay,Urbana,2003,26,,URY,0.474
+Uruguay,Urbana,2004,26,,URY,0.476
+Uruguay,Urbana,2005,26,,URY,0.463
+Uruguay,Nacional,2007,26,,URY,0.468
+Uruguay,Rural,2007,26,,URY,0.416
+Uruguay,Urbana,2007,26,,URY,0.47
+Uruguay,Nacional,2008,26,,URY,0.453
+Uruguay,Rural,2008,26,,URY,0.402
+Uruguay,Urbana,2008,26,,URY,0.456
+Uruguay,Nacional,2009,26,,URY,0.447
+Uruguay,Rural,2009,26,,URY,0.404
+Uruguay,Urbana,2009,26,,URY,0.448
+Uruguay,Nacional,2010,26,,URY,0.438
+Uruguay,Rural,2010,26,,URY,0.412
+Uruguay,Urbana,2010,26,,URY,0.438
+Uruguay,Nacional,2011,26,,URY,0.413
+Uruguay,Rural,2011,26,,URY,0.38
+Uruguay,Urbana,2011,26,,URY,0.415
+Uruguay,Nacional,2012,26,,URY,0.391
+Uruguay,Rural,2012,26,,URY,0.351
+Uruguay,Urbana,2012,26,,URY,0.392
+Uruguay,Nacional,2013,26,,URY,0.397
+Uruguay,Rural,2013,26,,URY,0.347
+Uruguay,Urbana,2013,26,,URY,0.399
+Uruguay,Nacional,2014,26,,URY,0.392
+Uruguay,Rural,2014,26,,URY,0.332
+Uruguay,Urbana,2014,26,,URY,0.394
+Uruguay,Nacional,2015,26,,URY,0.392
+Uruguay,Rural,2015,26,,URY,0.342
+Uruguay,Urbana,2015,26,,URY,0.394
+Uruguay,Nacional,2016,26,,URY,0.391
+Uruguay,Rural,2016,26,,URY,0.349
+Uruguay,Urbana,2016,26,,URY,0.392
+Uruguay,Nacional,2017,26,,URY,0.39
+Uruguay,Rural,2017,26,,URY,0.321
+Uruguay,Urbana,2017,26,,URY,0.392
+Uruguay,Nacional,2018,26,,URY,0.391
+Uruguay,Rural,2018,26,,URY,0.314
+Uruguay,Urbana,2018,26,,URY,0.394
+Uruguay,Nacional,2019,26,,URY,0.392
+Uruguay,Rural,2019,26,,URY,0.324
+Uruguay,Urbana,2019,26,,URY,0.394
+Venezuela (República Bolivariana de),Nacional,2000,26,,VEN,0.392
+Venezuela (República Bolivariana de),Nacional,2001,26,,VEN,0.42
+Venezuela (República Bolivariana de),Nacional,2002,26,,VEN,0.418
+Venezuela (República Bolivariana de),Nacional,2003,26,,VEN,0.401
+Venezuela (República Bolivariana de),Nacional,2004,26,,VEN,0.401
+Venezuela (República Bolivariana de),Nacional,2005,26,,VEN,0.433
+Venezuela (República Bolivariana de),Nacional,2006,26,,VEN,0.404
+Venezuela (República Bolivariana de),Nacional,2007,26,,VEN,0.391
+Venezuela (República Bolivariana de),Nacional,2008,26,,VEN,0.379
+Venezuela (República Bolivariana de),Nacional,2009,26,,VEN,0.381
+Venezuela (República Bolivariana de),Nacional,2010,26,,VEN,0.364
+Venezuela (República Bolivariana de),Nacional,2011,26,,VEN,0.368
+Venezuela (República Bolivariana de),Nacional,2012,26,,VEN,0.384
+Venezuela (República Bolivariana de),Nacional,2013,26,,VEN,0.388
+Venezuela (República Bolivariana de),Nacional,2014,26,,VEN,0.378
