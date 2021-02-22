@@ -38,48 +38,45 @@ red_button = {'background-color': 'red',
               'margin-top': '50px',
               'margin-left': '50px'}
 
+
 def time_series_quintil(data, country, area_g):
-    qs = {}
     df = data_frames[data]
     df["valor"] = df["valor"].astype(dtype='float64')
+    quints = {qt : "qt{}".format(qt[-1]) for qt in df["Quintil"].unique()}
 
     if area_g == 'Área geográfica':
-        for e in area:
-            q = df[
-                (df["País"] == country) &
-                (df["Quintil"] == 'Total quintiles') &
-                (df["Área geográfica"] == e)
-                ]
+        q = df[
+            (df["País"] == country) &
+            (df["Quintil"] == "Total quintiles")
+            ]
 
-            q["Años"] = q["Años"].astype(dtype='intc')
+        q["Años"] = q["Años"].astype(dtype='intc')
 
-            qs[e] = q
-
-        lfig = px.line(x=qs['Urbana']["Años"],
-                       y=[qs[a]['valor'] for a in area])
-
-        for i, q in enumerate(area):
-            lfig.data[i].name = q
+        lfig = px.line(q,
+                       x="Años",
+                       y='valor',
+                       color='Área geográfica')
+        for i, elem in enumerate(lfig.data):
+            lfig.data[i].name = "Tam_hog_{}".format(lfig.data[i].name)
 
     else:
-        for e in quintiles:
-            q = df[
-                (df["País"] == country) &
-                (df["Quintil"] == e) &
-                (df["Área geográfica"] == "Nacional")
-                ]
+        q = df[
+            (df["País"] == country) &
+            (df["Área geográfica"] == "Nacional")
+            ]
 
-            q["Años"] = q["Años"].astype(dtype='intc')
+        q["Años"] = q["Años"].astype(dtype='intc')
 
-            qs[e] = q
+        lfig = px.line(q,
+                       x="Años",
+                       y='valor',
+                       color='Quintil')
 
-        lfig = px.line(x=qs['Quintil 1']["Años"],
-                       y=[qs[qui]['valor'] for qui in quintiles])
+        for i, elem in enumerate(lfig.data):
+            lfig.data[i].name = "Tam_hog_{}".format(quints[lfig.data[i].name])
 
-        for i, q in enumerate(quintiles):
-            lfig.data[i].name = q
-
-    lfig.update_layout(title_text=country)
+    lfig.update_layout(title_text=country + " - Tamaño Medio del Hogar",
+                       legend_title="Desagregación")
     return lfig
 
 def side_stacked_bars(data, country):
@@ -750,7 +747,7 @@ app.layout = html.Div(children=[
                 min=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').min(),
                 max=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').max(),
                 step=None,
-                marks={int(year): year for year in data_frames['relacion_quintil_5_1']['Años'].unique()},
+                marks={int(year): str(year) for year in data_frames['relacion_quintil_5_1']['Años'].unique()},
                 value=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').min(),
             )
         ], width={'offset': 2, 'size': 8})
@@ -808,8 +805,8 @@ def update_graph(country, dim):
 def update_graph_line(country):
     try:
         return time_series_quintil('tamano_hogar', country, 'Quintil')
-    except ValueError:
-        return time_series_quintil('tamano_hogar', 'América Latina (promedio simple)', 'Quintil')
+    except (ValueError, KeyError):
+        return {}
 
 # Graph 3 : Time Series - Mujeres con dedicacion hogar
 @app.callback(
@@ -819,8 +816,8 @@ def update_graph_line(country):
 def update_graph_line_mh(country, dim):
     try:
         return time_series_quintil('mujeres_labor_hogar_AG_quintiles', country, dim)
-    except ValueError:
-        return time_series_quintil('mujeres_labor_hogar_AG_quintiles', 'Brasil', 'Quintil')
+    except (ValueError, KeyError):
+        return {}
 
 #Graph 4 : Side stacked bars - Tasa de participacion economica
 @app.callback(
@@ -828,7 +825,7 @@ def update_graph_line_mh(country, dim):
         Input('tpe_input_dim','value'))
 def ug_bars(country):
     try: return side_stacked_bars('tasa_de_participacion_economica', country)
-    except ValueError: return side_stacked_bars('tasa_de_participacion_economica', 'Brasil')
+    except ValueError: return {}
 
 # Graph 5 : Ordered bars - relacion ingreso sexo
 @app.callback(
@@ -838,7 +835,7 @@ def order_bars(year):
     try:
         return sort_pais_bar('relacion_ingreso_medio_sexo', year)
     except ValueError:
-        return sort_pais_bar('relacion_ingreso_medio_sexo', 2018)
+        return {}
 
 # Graph 6 : Side by side bars - relacion ingreso sexo
 @app.callback(
@@ -849,7 +846,7 @@ def ss_bars(country, area):
     try:
         return sidebside_bars('relacion_ingreso_medio_sexo', country, area)
     except ValueError:
-        return sidebside_bars('relacion_ingreso_medio_sexo', 'América Latina (promedios simple)', 'Nacional')
+        return {}
 
 #Graph 7 : Stacked Bars - Ocupados urbanos informales
 @app.callback(
@@ -857,7 +854,7 @@ def ss_bars(country, area):
         Input('oui_input_cty','value'))
 def stack_bars(country):
     try: return stacked_bars('ocupados_informal_sexo', country)
-    except ValueError: return sidebside_bars('ocupados_informal_sexo', 'América Latina (promedio ponderado)')
+    except ValueError: return {}
 
 #Graph 8 : Gini : 45 degree line
 @app.callback(
@@ -957,21 +954,21 @@ def edu_graph(c, y, b1, b2, b3, b4):
     Input('slider_hog','value'))
 def hog_graph(country,year):
     try: return side_side_bars('hogares_disponibilidad_servicios',country,year)
-    except ValueError: return side_side_bars('hogares_disponibilidad_servicios','América Latina (promedio simple)',2001)
+    except ValueError: return {}
 
 #Graph 11 : Tasa de victimizacion
 @app.callback(
     Output('vic_graph','figure'),
     Input('slider_vic','value'))
 def victim(year):
-    try: return points(year)
+    try: return points('tasa_victimizacion', year, 'Mujeres', 'Sexo', ['Hombres', 'Mujeres'])
     except ValueError: return {}
 
-#Graph 12 : Relacion quintil 5 y quintil 1
+#Graph 12 : Relacion quintil 5 y quintil 1.
 @app.callback(
     Output('quintil51_graph','figure'),
     Input('slider_quintil51','value'))
-def victim(year):
+def quintil51(year):
     try: return points('relacion_quintil_5_1', year, 'Urbana', 'Área geográfica', ['Urbana', 'Rural'])
     except ValueError: return {}
 
