@@ -39,10 +39,12 @@ red_button = {'background-color': 'red',
               'margin-left': '50px'}
 
 
-def time_series_quintil(data, country, area_g):
+def time_series_quintil(data, country, area_g, indicador):
     df = data_frames[data]
     df["valor"] = df["valor"].astype(dtype='float64')
-    quints = {qt : "qt{}".format(qt[-1]) for qt in df["Quintil"].unique()}
+    quints = {qt: "qt{}".format(qt[-1]) for qt in df["Quintil"].unique()}
+    varright = {"Tamaño medio del hogar": ["tam_hog_", "Tamaño hogar"],
+                "Mujeres con dedicación al hogar": ["Muj_d_hog_", "Porcentaje"]}
 
     if area_g == 'Área geográfica':
         q = df[
@@ -55,9 +57,10 @@ def time_series_quintil(data, country, area_g):
         lfig = px.line(q,
                        x="Años",
                        y='valor',
-                       color='Área geográfica')
+                       color='Área geográfica',
+                       labels={'valor': varright[indicador][1]})
         for i, elem in enumerate(lfig.data):
-            lfig.data[i].name = "Tam_hog_{}".format(lfig.data[i].name)
+            lfig.data[i].name = "{}{}".format(varright[indicador][0], lfig.data[i].name[:3])
 
     else:
         q = df[
@@ -70,13 +73,20 @@ def time_series_quintil(data, country, area_g):
         lfig = px.line(q,
                        x="Años",
                        y='valor',
-                       color='Quintil')
+                       color='Quintil',
+                       labels={'valor': varright[indicador][1]})
 
         for i, elem in enumerate(lfig.data):
-            lfig.data[i].name = "Tam_hog_{}".format(quints[lfig.data[i].name])
+            lfig.data[i].name = "{}{}".format(varright[indicador][0], quints[lfig.data[i].name])
 
-    lfig.update_layout(title_text=country + " - Tamaño Medio del Hogar",
-                       legend_title="Desagregación")
+    lfig.update_layout(title_text=country + " - " + indicador,
+                       legend_title="Desagregación",
+                       xaxis=dict(
+                           tickmode='linear',
+                           tick0=df["Años"].min(),
+                           dtick=1
+                       ))
+
     return lfig
 
 def side_stacked_bars(data, country):
@@ -378,7 +388,7 @@ paises = list(data_frame['País'].unique())
 
 # Desagregaciones
 anios = sorted(list(map(int, data_frame['Años'].unique())))
-years = [2002, 2010, 2019]
+years = [2002,2005,2010,2014,2019]
 quintiles = list(data_frame["Quintil"].unique())
 area = list(data_frame["Área geográfica"].unique())
 
@@ -788,12 +798,12 @@ def update_graph(country, dim):
 
     # The Figure
     fig = go.Figure(data=[
-        go.Bar(name=str(year),
+        go.Bar(name="tam_hog_" + str(year),
                x=x_d,
                y=filt[data_frame["Años"] == year]['valor']) for year in years
     ])
 
-    fig.update_layout(title_text=country,
+    fig.update_layout(title_text="{} - Tamaño Medio del Hogar".format(country),
                       barmode='group')
 
     return fig
@@ -804,7 +814,7 @@ def update_graph(country, dim):
     Input('input_country_line', 'value'))
 def update_graph_line(country):
     try:
-        return time_series_quintil('tamano_hogar', country, 'Quintil')
+        return time_series_quintil('tamano_hogar', country, 'Quintil', "Tamaño medio del hogar")
     except (ValueError, KeyError):
         return {}
 
@@ -815,7 +825,7 @@ def update_graph_line(country):
     Input('mh_input_dim', 'value'))
 def update_graph_line_mh(country, dim):
     try:
-        return time_series_quintil('mujeres_labor_hogar_AG_quintiles', country, dim)
+        return time_series_quintil('mujeres_labor_hogar_AG_quintiles', country, dim, "Mujeres con dedicación al hogar")
     except (ValueError, KeyError):
         return {}
 
