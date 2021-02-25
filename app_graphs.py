@@ -159,6 +159,10 @@ def sidebside_bars(data, country, area):
     # Select Data Frame
     data_frame = data_frames[data].copy(deep=True)
     data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
+    data_frame['Años'] = data_frame['Años'].astype('str')
+    print(data_frame.dtypes)
+    data_frame['Años observados'] = data_frame['Años'].apply(lambda x: x + "-M/H")
+
 
     # Filter data
     years = ['2002', '2010', '2018']
@@ -170,7 +174,7 @@ def sidebside_bars(data, country, area):
     fig = px.bar(filt_data,
                  x='Escolaridad (EH)',
                  y='valor',
-                 color='Años',
+                 color='Años observados',
                  labels={'valor': 'Relación Ingreso (M/H)'})
 
     fig.update_layout(title_text=country + ' - Relación del ingreso por sexo',
@@ -382,17 +386,18 @@ def points(data, year, initsort, sex_area, sa_dims):
     return fig
 
 # User input
-desagregacion = ["Área geográfica", "Quintil"]
+desagregacion = ["Quintil", "Área geográfica"]
 paises = list(data_frame['País'].unique())
 
 # Desagregaciones
 anios = sorted(list(map(int, data_frame['Años'].unique())))
-anios_rim = sorted(list(map(int,data_frames['relacion_ingreso_medio_sexo']['Años'].unique())))
-years = [2002,2005,2010,2014,2019]
+anios_rim = sorted(list(map(int, data_frames['relacion_ingreso_medio_sexo']['Años'].unique())))
+years = [2002, 2005, 2010, 2014, 2019]
 quintiles = list(data_frame["Quintil"].unique())
 area = list(data_frame["Área geográfica"].unique())
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
+
 
 # 2 Column layout
 def two_column_layout(**kwargs):
@@ -573,17 +578,19 @@ app.layout = html.Div(children=[
                          id_graph='mujeres_lh_ts'),
 
     # PARTICIPACION ECONOMICA
-    single_column_layout(title='Tasa de participación económica de la población, por grupos de edad, sexo y área geográfica',
-                         title2='Barras lado a lado',
-                         id_dropdown1='tpe_input_dim',
-                         dropdown_options1=[{'label' : c, 'value' : c} for c in data_frames['tasa_de_participacion_economica']['País'].unique()],
-                         dropdown_placeholder1='Seleccionar País o Región',
-                         id_dropdown2='tpe_input_aqe',
-                         dropdown_options2=[{'label' : c, 'value' : c} for c in ['Área geográfica',
-                                                                    'Grupo edad para participación en la PEA',
-                                                                    'Quintil']],
-                         dropdown_placeholder2='Seleccionar dimensión de desagregación',
-                         id_graph='tpe_graph'),
+    single_column_layout(
+        title='Tasa de participación económica de la población, por grupos de edad, sexo y área geográfica',
+        title2='Barras lado a lado',
+        id_dropdown1='tpe_input_dim',
+        dropdown_options1=[{'label': c, 'value': c} for c in
+                           data_frames['tasa_de_participacion_economica']['País'].unique()],
+        dropdown_placeholder1='Seleccionar País o Región',
+        id_dropdown2='tpe_input_aqe',
+        dropdown_options2=[{'label': c, 'value': c} for c in ['Área geográfica',
+                                                              'Grupo edad para participación en la PEA',
+                                                              'Quintil']],
+        dropdown_placeholder2='Seleccionar dimensión de desagregación',
+        id_graph='tpe_graph'),
 
     # RELACION INGRESO MEDIO
     two_column_layout(title='Relacion del ingreso medio entre los sexos por años de educación y área geográfica',
@@ -598,7 +605,7 @@ app.layout = html.Div(children=[
                                          data_frames['relacion_ingreso_medio_sexo']['Área geográfica'].unique()],
                       dropdown_placeholder2='Seleccionar área geográfica',
                       id_dropdown3='rims_input_dim',
-                      dropdown_options3=[{'label': str(c), 'value': str(c)} for c in anios_rim],
+                      dropdown_options3=[{'label': c, 'value': c} for c in anios_rim],
                       dropdown_placeholder3='Seleccionar Año',
                       id_graph1='rims2_graph',
                       id_graph2='rims_graph'),
@@ -655,6 +662,8 @@ app.layout = html.Div(children=[
             justify='center'
         ),
     ]),
+
+    # POBLACION ADULTA ESCOLARIDAD
     single_column_layout(title='',
                          title2='Barras y línea',
                          id_dropdown1='edu_input_cty',
@@ -666,46 +675,53 @@ app.layout = html.Div(children=[
                                             data_frames['poblacion_adulta_escolaridad']['Años'].unique()],
                          dropdown_placeholder2='Seleccionar año',
                          id_graph='edu_graph'),
+
+    # SERVICIOS BASICOS HOGAR
     single_column_layout(title='Hogares según disponibilidad de servicios básicos en la vivienda, por área geográfica',
-                     title2='Barras lado a lado',
-                     id_dropdown1='hog_input_cty',
-                     dropdown_options1=[{'label' : c, 'value' : c} for c in data_frames['hogares_disponibilidad_servicios']['País'].unique()],
-                     dropdown_placeholder1='Seleccionar País',
-                     id_graph='hog_graph'),
+                         title2='Barras lado a lado',
+                         id_dropdown1='hog_input_cty',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['hogares_disponibilidad_servicios']['País'].unique()],
+                         dropdown_placeholder1='Seleccionar País',
+                         id_graph='hog_graph'),
     dbc.Row([
-                dbc.Col([
-                    html.Label('Seleccionar un año'),
-                    dcc.Slider(
-                    id='slider_hog',
-                    min=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
-                    max=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').max(),
-                    step=1,
-                    marks={2000:'2000',
-                          2010:'2010',
-                          2019:'2019'},
-                    value=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
-                    )
-                ], width={'offset' : 2, 'size' : 8})
+        dbc.Col([
+            html.Label('Seleccionar un año'),
+            dcc.Slider(
+                id='slider_hog',
+                min=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
+                max=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').max(),
+                step=1,
+                marks={2000: '2000',
+                       2010: '2010',
+                       2019: '2019'},
+                value=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
+            )
+        ], width={'offset': 2, 'size': 8})
     ]),
+
+    # TASA DE VICTIMIZACION
     single_column_layout(title='Tasa de victimización, por sexo',
-                     title2='Scatter dinámico',
-                     id_dropdown1='vic_input_cty',
-                     dropdown_options1=[],
-                     dropdown_placeholder1='',
-                     id_graph='vic_graph'),
+                         title2='Scatter dinámico',
+                         id_dropdown1='vic_input_cty',
+                         dropdown_options1=[],
+                         dropdown_placeholder1='',
+                         id_graph='vic_graph'),
     dbc.Row([
-                dbc.Col([
-                    html.Label('Seleccionar un año'),
-                    dcc.Slider(
-                    id='slider_vic',
-                    min=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
-                    max=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').max(),
-                    step=None,
-                    marks={int(year) : str(year) for year in data_frames['tasa_victimizacion']['Años'].unique()},
-                    value=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
-                    )
-                ], width={'offset' : 2, 'size' : 8})
+        dbc.Col([
+            html.Label('Seleccionar un año'),
+            dcc.Slider(
+                id='slider_vic',
+                min=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
+                max=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').max(),
+                step=None,
+                marks={int(year): str(year) for year in data_frames['tasa_victimizacion']['Años'].unique()},
+                value=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
+            )
+        ], width={'offset': 2, 'size': 8})
     ]),
+
+    # RELACION DEL INGRESO MEDIO: QUINTIL 5/ QUINTIL 1
     html.Div(children=[
 
         dbc.Row([
@@ -835,7 +851,7 @@ def order_bars(year):
     try:
         return sort_pais_bar('relacion_ingreso_medio_sexo', year)
     except ValueError:
-        return {}
+        {}
 
 # Graph 6 : Side by side bars - relacion ingreso sexo
 @app.callback(
@@ -845,7 +861,7 @@ def order_bars(year):
 def ss_bars(country, area):
     try:
         return sidebside_bars('relacion_ingreso_medio_sexo', country, area)
-    except (KeyError,ValueError):
+    except (ValueError, KeyError):
         return {}
 
 #Graph 7 : Stacked Bars - Ocupados urbanos informales
