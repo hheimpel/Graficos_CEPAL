@@ -118,7 +118,12 @@ def side_stacked_bars(data, country, dim):
                  labels={'valor': 'Porcentaje'})
 
     fig.update_layout(title_text=country + ' ' + str(l_year) + ' - Tasa de participación económica',
-                      barmode='group')
+                      barmode='group',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 10 for i in range(11)])
+                      )
+    fig.update_yaxes(range=(0, 100))
 
     return fig
 
@@ -568,46 +573,17 @@ app.layout = html.Div(children=[
                          id_graph='mujeres_lh_ts'),
 
     # PARTICIPACION ECONOMICA
-    html.Div(children=[
-
-        dbc.Row([
-            html.H2('Tasa de participación económica de la población, por grupos de edad, sexo y área geográfica')
-        ],
-            justify='center'
-        ),
-
-        dbc.Row([
-            html.H3('Barras lado a lado'),
-        ],
-            justify='center'
-        ),
-
-        dbc.Row([
-            dbc.Col([
-                dcc.Dropdown(
-                    id='tpe_input_dim',
-                    options=[{'label': c, 'value': c} for c in
-                             data_frames['tasa_de_participacion_economica']['País'].unique()],
-                    placeholder='Seleccionar País o Región'
-                ),
-                dcc.Dropdown(
-                    id='tpe_input_aqe',
-                    options=[{'label': c, 'value': c} for c in ['Área geográfica',
-                                                                'Grupo edad para participación en la PEA',
-                                                                'Quintil']],
-                    placeholder='Seleccionar Dimensión de Desagregación'
-                )
-            ], width={'size': 8})
-        ],
-            justify='center'
-        ),
-
-        dbc.Row([
-            dbc.Col([
-                dcc.Graph(id='tpe_graph')
-            ], width={'size': 12})
-        ])
-    ]),
+    single_column_layout(title='Tasa de participación económica de la población, por grupos de edad, sexo y área geográfica',
+                         title2='Barras lado a lado',
+                         id_dropdown1='tpe_input_dim',
+                         dropdown_options1=[{'label' : c, 'value' : c} for c in data_frames['tasa_de_participacion_economica']['País'].unique()],
+                         dropdown_placeholder1='Seleccionar País o Región',
+                         id_dropdown2='tpe_input_aqe',
+                         dropdown_options2=[{'label' : c, 'value' : c} for c in ['Área geográfica',
+                                                                    'Grupo edad para participación en la PEA',
+                                                                    'Quintil']],
+                         dropdown_placeholder2='Seleccionar dimensión de desagregación',
+                         id_graph='tpe_graph'),
 
     # RELACION INGRESO MEDIO
     two_column_layout(title='Relacion del ingreso medio entre los sexos por años de instrucción y área geográfica',
@@ -817,7 +793,7 @@ def update_graph(country, dim):
 def update_graph_line(country):
     try:
         return time_series_quintil('tamano_hogar', country, 'Quintil', "Tamaño medio del hogar")
-    except (ValueError, KeyError):
+    except (ValueError, KeyError, IndexError):
         return {}
 
 # Graph 3 : Time Series - Mujeres con dedicacion hogar
