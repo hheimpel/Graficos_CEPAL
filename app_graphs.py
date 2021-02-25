@@ -39,7 +39,6 @@ red_button = {'background-color': 'red',
               'margin-top': '50px',
               'margin-left': '50px'}
 
-
 def time_series_quintil(data, country, area_g, indicador):
     df = data_frames[data]
     df["valor"] = df["valor"].astype(dtype='float64')
@@ -140,23 +139,19 @@ def sort_pais_bar(data, year):
     filt_data.sort_values(by='valor', inplace=True)
 
     # Figure
-    fig = go.Figure(data=[go.Bar(name=str(year),
-                                 x=list(filt_data['País']),
-                                 y=list(filt_data['valor']))]
-                    )
+    fig = px.bar(filt_data,
+                 x='País',
+                 y='valor',
+                 labels={'valor': 'Relación Ingreso (M/H)'})
 
-    try:
-        fig.add_shape(type='line',
-                      x0=list(filt_data['País'])[0],
-                      y0=100,
-                      x1=list(filt_data['País'])[-1],
-                      y1=100,
-                      line=dict(color='Red', ),
-                      xref='x',
+    fig.update_layout(title_text=str(year) + ' - Relación del ingreso por sexo',
+                      barmode='group',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 10 for i in range(11)])
+                      )
 
-                      yref='y')
-    except IndexError:
-        pass
+    fig.update_yaxes(range=(0, 100))
 
     return fig
 
@@ -164,23 +159,27 @@ def sidebside_bars(data, country, area):
     # Select Data Frame
     data_frame = data_frames[data].copy(deep=True)
     data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
-    data_frame['Años'] = data_frame['Años'].astype(dtype='intc')
 
     # Filter data
-    years = [2002, 2010, 2018]
+    years = ['2002', '2010', '2018']
     filt_data = data_frame[(data_frame['Años'].isin(years)) &
                            (data_frame['País'] == country) &
                            (data_frame['Área geográfica'] == area)]
 
     # Figure
-    fig = go.Figure(data=[
-        go.Bar(name=str(year),
-               x=list(filt_data['Escolaridad (EH)'].unique()),
-               y=filt_data[filt_data["Años"] == year]['valor']) for year in years]
-    )
+    fig = px.bar(filt_data,
+                 x='Escolaridad (EH)',
+                 y='valor',
+                 color='Años',
+                 labels={'valor': 'Relación Ingreso (M/H)'})
 
-    fig.update_layout(title_text=country,
-                      barmode='group')
+    fig.update_layout(title_text=country + ' - Relación del ingreso por sexo',
+                      barmode='group',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 10 for i in range(11)])
+                      )
+    fig.update_yaxes(range=(0, 100))
 
     return fig
 
@@ -388,6 +387,7 @@ paises = list(data_frame['País'].unique())
 
 # Desagregaciones
 anios = sorted(list(map(int, data_frame['Años'].unique())))
+anios_rim = sorted(list(map(int,data_frames['relacion_ingreso_medio_sexo']['Años'].unique())))
 years = [2002,2005,2010,2014,2019]
 quintiles = list(data_frame["Quintil"].unique())
 area = list(data_frame["Área geográfica"].unique())
@@ -586,7 +586,7 @@ app.layout = html.Div(children=[
                          id_graph='tpe_graph'),
 
     # RELACION INGRESO MEDIO
-    two_column_layout(title='Relacion del ingreso medio entre los sexos por años de instrucción y área geográfica',
+    two_column_layout(title='Relacion del ingreso medio entre los sexos por años de educación y área geográfica',
                       title_graph1='Serie de Tiempo',
                       title_graph2='Barras lado a lado',
                       id_dropdown1='rims2_input_cty',
@@ -598,9 +598,8 @@ app.layout = html.Div(children=[
                                          data_frames['relacion_ingreso_medio_sexo']['Área geográfica'].unique()],
                       dropdown_placeholder2='Seleccionar área geográfica',
                       id_dropdown3='rims_input_dim',
-                      dropdown_options3=[{'label': c, 'value': c} for c in
-                                         data_frames['relacion_ingreso_medio_sexo']['Años'].unique()],
-                      dropdown_placeholder3='Seleccionar País o Región',
+                      dropdown_options3=[{'label': str(c), 'value': str(c)} for c in anios_rim],
+                      dropdown_placeholder3='Seleccionar Año',
                       id_graph1='rims2_graph',
                       id_graph2='rims_graph'),
 
@@ -846,7 +845,7 @@ def order_bars(year):
 def ss_bars(country, area):
     try:
         return sidebside_bars('relacion_ingreso_medio_sexo', country, area)
-    except ValueError:
+    except (KeyError,ValueError):
         return {}
 
 #Graph 7 : Stacked Bars - Ocupados urbanos informales
