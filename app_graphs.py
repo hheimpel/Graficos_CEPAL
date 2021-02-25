@@ -12,6 +12,7 @@ import numpy
 csv_files = ['tamano_hogar',
              'mujeres_labor_hogar_AG_quintiles',
              'tasa_de_participacion_economica',
+             'tasa_de_participacion_economica_quintil',
              'relacion_ingreso_medio_sexo',
              'ocupados_informal_sexo',
              'gini',
@@ -89,41 +90,35 @@ def time_series_quintil(data, country, area_g, indicador):
 
     return lfig
 
-def side_stacked_bars(data, country):
+def side_stacked_bars(data, country, dim):
     # Filter pandas data_frame
     data_frame = data_frames[data]
-    filt_cty = data_frame[(data_frame['País'] == country) &
-                          (data_frame['Área geográfica'] != 'Nacional') &
-                          (data_frame['Sexo'] != 'Ambos sexos')]
+    filt_cty = data_frame[(data_frame['País'] == country)].copy(deep=True)
     filt_cty['Años'] = filt_cty['Años'].astype(dtype='intc')
     filt_cty['valor'] = filt_cty['valor'].astype(dtype='float64')
 
     # Get latest year of available data and filter by it
     l_year = filt_cty['Años'].max()
-    f_c_y = filt_cty[(filt_cty['Años'] == l_year)]
+    aggregates = {'Área geográfica': 'Total (15 años y más)',
+                  'Grupo edad para participación en la PEA': 'Nacional',
+                  'Quintil': 'Nacional'}
+    aggregates2 = {'Área geográfica': 'Grupo edad para participación en la PEA',
+                   'Grupo edad para participación en la PEA': 'Área geográfica',
+                   'Quintil': 'Área geográfica'}
+    f_c_y = filt_cty[(filt_cty['Años'] == l_year) &
+                     (filt_cty[aggregates2[dim]] == aggregates[dim])]
 
-    xs = list(f_c_y['Grupo edad para participación en la PEA'].unique())
-
-    ar = ['Rural', 'Urbana']
-    sex = ['Hombres', 'Mujeres']
-    ys = {a + ' ' + s: list(f_c_y[(f_c_y['Área geográfica'] == a) & (f_c_y['Sexo'] == s)]['valor']) for a in ar for s in
-          sex}
+    xs = list(f_c_y[dim].unique())
 
     # Figure
-    fig = make_subplots(rows=1, cols=2)
-    fig.add_trace(go.Bar(name='Rural - Hombres', x=xs, y=ys['Rural Hombres']),
-                  row=1, col=1)
-    fig.add_trace(go.Bar(name='Rural - Mujeres', x=xs, y=ys['Rural Mujeres']),
-                  row=1, col=1)
-    fig.add_trace(go.Bar(name='Urbana - Hombres', x=xs, y=ys['Urbana Hombres']),
-                  row=1, col=2)
-    fig.add_trace(go.Bar(name='Urbana - Mujeres', x=xs, y=ys['Urbana Mujeres']),
-                  row=1, col=2)
+    fig = px.bar(f_c_y,
+                 x=dim,
+                 y='valor',
+                 color='Sexo',
+                 labels={'valor': 'Porcentaje'})
 
-    try:
-        fig.update_layout(title_text=country + ' ' + str(l_year))
-    except TypeError:
-        pass
+    fig.update_layout(title_text=country + ' ' + str(l_year) + ' - Tasa de participación económica',
+                      barmode='group')
 
     return fig
 
@@ -594,6 +589,13 @@ app.layout = html.Div(children=[
                     options=[{'label': c, 'value': c} for c in
                              data_frames['tasa_de_participacion_economica']['País'].unique()],
                     placeholder='Seleccionar País o Región'
+                ),
+                dcc.Dropdown(
+                    id='tpe_input_aqe',
+                    options=[{'label': c, 'value': c} for c in ['Área geográfica',
+                                                                'Grupo edad para participación en la PEA',
+                                                                'Quintil']],
+                    placeholder='Seleccionar Dimensión de Desagregación'
                 )
             ], width={'size': 8})
         ],
@@ -832,10 +834,23 @@ def update_graph_line_mh(country, dim):
 #Graph 4 : Side stacked bars - Tasa de participacion economica
 @app.callback(
         Output('tpe_graph','figure'),
-        Input('tpe_input_dim','value'))
-def ug_bars(country):
-    try: return side_stacked_bars('tasa_de_participacion_economica', country)
-    except ValueError: return {}
+        Input('tpe_input_dim','value'),
+        Input('tpe_input_aqe', 'value'))
+def ug_bars(country, dim):
+    if dim == 'Quintil':
+        try: return side_stacked_bars('tasa_de_participacion_economica_quintil',
+                                      country,
+                                     'Quintil')
+        except (TypeError, ValueError, KeyError): return side_stacked_bars('tasa_de_participacion_economica',
+                                                                 'América Latina (promedio simple)',
+                                                                 'Quintil')
+    else:
+        try: return side_stacked_bars('tasa_de_participacion_economica',
+                                      country,
+                                      dim)
+        except (TypeError, ValueError, KeyError): return side_stacked_bars('tasa_de_participacion_economica',
+                                                                 'América Latina (promedio simple)',
+                                                                 'Área geográfica')
 
 # Graph 5 : Ordered bars - relacion ingreso sexo
 @app.callback(
