@@ -23,6 +23,10 @@ csv_files = ['tamano_hogar',
 
 data_frames = {name: pd.read_csv('{}.csv'.format(name)) for name in csv_files}
 data_frame = data_frames['tamano_hogar']
+pais_iso_df = data_frames['tasa_de_participacion_economica']
+pais_iso = {pais : iso for pais,iso in zip(pais_iso_df['País'].unique(),pais_iso_df['iso3'].unique())}
+pais_iso['América Latina (promedio ponderado)']='AL (pd)'
+pais_iso['América Latina (promedio simple)']='AL (ps)'
 
 # HTML Button styles
 white_button = {'background-color': 'white',
@@ -128,8 +132,9 @@ def side_stacked_bars(data, country, dim):
 
 def sort_pais_bar(data, year):
     # Select Data Frame
-    data_frame = data_frames[data]
+    data_frame = data_frames[data].copy(deep=True)
     data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
+    data_frame['País (ISO)'] = data_frame['País'].apply(lambda x: pais_iso[x])
 
     # Filter data
     filt_data = data_frame[(data_frame['Años'] == year) &
@@ -140,7 +145,7 @@ def sort_pais_bar(data, year):
 
     # Figure
     fig = px.bar(filt_data,
-                 x='País',
+                 x='País (ISO)',
                  y='valor',
                  labels={'valor': 'Relación Ingreso (M/H)'})
 
@@ -155,14 +160,35 @@ def sort_pais_bar(data, year):
 
     return fig
 
+def sort_gini(area,year):
+    # Select Data Frame
+    data_frame = data_frames['gini'].copy(deep=True)
+    data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
+    data_frame['País (ISO)'] = data_frame['País'].apply(lambda x: pais_iso[x])
+
+    # Filter data
+    filt_data = data_frame[(data_frame['Años'] == year) &
+                           (data_frame['Área geográfica'] == area)]
+
+    filt_data.sort_values(by='valor', inplace=True)
+
+    # Figure
+    fig = px.bar(filt_data,
+                 x='País (ISO)',
+                 y='valor',
+                 labels={'valor': 'Gini - '+str(year)})
+
+    fig.update_layout(title_text=str(year) + ' - Gini',
+                      barmode='group')
+
+    return fig
+
 def sidebside_bars(data, country, area):
     # Select Data Frame
     data_frame = data_frames[data].copy(deep=True)
     data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
     data_frame['Años'] = data_frame['Años'].astype('str')
-    print(data_frame.dtypes)
     data_frame['Años observados'] = data_frame['Años'].apply(lambda x: x + "-M/H")
-
 
     # Filter data
     years = ['2002', '2010', '2018']
@@ -199,66 +225,68 @@ def stacked_bars(data, country):
                            (data_frame['Sexo'] != 'Ambos sexos')]
 
     # Figure
-    fig = go.Figure(data=[
-        go.Bar(name=str(sex),
-               x=list(filt_data['Años'].unique()),
-               y=filt_data[filt_data['Sexo'] == sex]['valor']) for sex in ['Hombres', 'Mujeres']]
-    )
+    fig = px.line(filt_data,
+                  x='Años',
+                  y='valor',
+                  color='Sexo',
+                  labels={'valor': 'Procentaje'})
 
-    fig.update_layout(title_text=country,
-                      barmode='stack')
+    fig.update_layout(title_text=country)
+    fig.update_layout(title_text=country + ' - Ocupados en baja productividad (informales)',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 5 for i in range(21)]),
+                      xaxis=dict(
+                          tickmode='array',
+                          tickvals=[i for i in range(filt_data['Años'].min(), filt_data['Años'].max() + 1)])
+                      )
+    fig.update_xaxes(tickangle=45)
 
     return fig
 
-def gini(area, decade):
+def clean_gini(area):
     gini_df = data_frames['gini']
     gini_df['Años'] = gini_df['Años'].astype(dtype='intc')
     gini_df['valor'] = gini_df['valor'].astype(dtype='float64')
+    gini_df['País (ISO)'] = gini_df['País'].apply(lambda x: pais_iso[x])
 
-    graph_gini_df = {'País': [], 'Primer Año': [], 'Ultimo Año': [], 'Gini {}'.format(decade): [],
-                     'Gini (2014-2019)': []}
+    gini_df = gini_df[(gini_df['Área geográfica'] == area)].sort_values(['País', 'Años'])
 
-    if decade != '2000s':
-        gini_df = gini_df[gini_df['Años'] > 2009]
+    mn_gini = gini_df[gini_df.groupby('País').cumcount() == 0].rename(columns={'valor': 'Gini - Inicial',
+                                                                               'Años': 'Año - Inicial'})
 
-    for pais in gini_df['País'].unique():
-        aux = gini_df[(gini_df["País"] == pais)]
-        try:
-            graph_gini_df['Gini {}'.format(decade)].append(gini_df[(gini_df["País"] == pais) &
-                                                                   (gini_df['Años'] == aux['Años'].min()) &
-                                                                   (gini_df["Área geográfica"] == area)]['valor'].iloc[
-                                                               0])
-            graph_gini_df['Gini (2014-2019)'].append(gini_df[(gini_df["País"] == pais) &
-                                                             (gini_df['Años'] == aux['Años'].max()) &
-                                                             (gini_df["Área geográfica"] == area)]['valor'].iloc[0])
-            graph_gini_df['Primer Año'].append(aux['Años'].min())
-            graph_gini_df['Ultimo Año'].append(aux['Años'].max())
-            graph_gini_df['País'].append(pais)
-        except IndexError:
-            pass
+    gini_df = gini_df[(gini_df['Área geográfica'] == area)].sort_values(['País', 'Años'], ascending=[True, False])
 
-    gini_filt = pd.DataFrame(graph_gini_df)
-    gini_filt['color'] = numpy.where(gini_filt['Gini (2014-2019)'] >= gini_filt['Gini {}'.format(decade)],
-                                     'Increased Inequality',
-                                     'Decreased Inequality')
+    mx_gini = gini_df[gini_df.groupby('País').cumcount() == 0].rename(columns={'valor': 'Gini - Final',
+                                                                               'Años': 'Año - Final'})
+    mx_gini['Gini - Inicial'] = list(mn_gini['Gini - Inicial'])
+    mx_gini['Año - Inicial'] = list(mn_gini['Año - Inicial'])
 
-    try:
-        figure = px.scatter(gini_filt, x='Gini {}'.format(decade),
-                            y='Gini (2014-2019)',
-                            color='color',
-                            size='Gini {}'.format(decade),
-                            text='País')
-        figure.add_shape(type='line',
-                         x0=.3,
-                         y0=.3,
-                         x1=.7,
-                         y1=.7,
-                         line=dict(color='Red', ),
-                         xref='x',
-                         yref='y')
-        return figure
-    except KeyError:
-        return {}
+    mx_gini['Desigualdad'] = numpy.where(mx_gini['Gini - Final'] >= mx_gini['Gini - Inicial'],
+                                         'Incremento en Desigualdad',
+                                         'Decremento en Desigualdad')
+    return mx_gini
+
+def gini(area):
+    # FIGURE
+    figure = px.scatter(clean_gini(area),
+                        x='Gini - Inicial',
+                        y='Gini - Final',
+                        color='Desigualdad',
+                        size='Gini - Inicial',
+                        text='País (ISO)',
+                        hover_data=['Año - Inicial', 'Año - Final'])
+    figure.add_shape(type='line',
+                     x0=.3,
+                     y0=.3,
+                     x1=.7,
+                     y1=.7,
+                     line=dict(color='Red',
+                               width=.5),
+                     xref='x',
+                     yref='y')
+
+    return figure
 
 def bars_lines(country, year, b1, b2, b3, b4):
     # Filters
@@ -392,6 +420,7 @@ paises = list(data_frame['País'].unique())
 # Desagregaciones
 anios = sorted(list(map(int, data_frame['Años'].unique())))
 anios_rim = sorted(list(map(int, data_frames['relacion_ingreso_medio_sexo']['Años'].unique())))
+anios_gini = sorted(list(map(int, data_frames['gini']['Años'].unique())))
 years = [2002, 2005, 2010, 2014, 2019]
 quintiles = list(data_frame["Quintil"].unique())
 area = list(data_frame["Área geográfica"].unique())
@@ -549,6 +578,26 @@ server = app.server
 app.layout = html.Div(children=[
     html.H1('Indicadores Muestra'),
 
+    # COEFICIENTE DE GINI
+    single_column_layout(title='Coeficiente de Gini',
+                         title2='Línea 45 grados',
+                         id_dropdown1='gini_input_area',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['gini']['Área geográfica'].unique()],
+                         dropdown_placeholder1='Seleccionar área geográfica',
+                         id_graph='gini_graph'),
+
+    single_column_layout(title='',
+                         title2='Barras Ordenadas',
+                         id_dropdown1='gini_input_a',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['gini']['Área geográfica'].unique()],
+                         dropdown_placeholder1='Seleccionar área geográfica',
+                         id_dropdown2='gini_input_y',
+                         dropdown_options2=[{'label': c, 'value': c} for c in anios_gini],
+                         dropdown_placeholder2='Seleccionar Año',
+                         id_graph='gini_bars'),
+
     # TAMANO MEDIO HOGARES
     two_column_layout(title='Tamaño medio de los hogares',
                       title_graph1='Barras Agrupadas',
@@ -618,18 +667,6 @@ app.layout = html.Div(children=[
                                             data_frames['ocupados_informal_sexo']['País'].unique()],
                          dropdown_placeholder1='Seleccionar País o Región',
                          id_graph='oui_graph'),
-
-    # COEFICIENTE DE GINI
-    single_column_layout(title='Coeficiente de Gini',
-                         title2='Línea 45 grados',
-                         id_dropdown1='gini_input_area',
-                         dropdown_options1=[{'label': c, 'value': c} for c in
-                                            data_frames['gini']['Área geográfica'].unique()],
-                         dropdown_placeholder1='Seleccionar área geográfica',
-                         id_dropdown2='gini_input_time',
-                         dropdown_options2=[{'label': c, 'value': c} for c in ['2000s', '2010s']],
-                         dropdown_placeholder2='Seleccionar periodo de comparación',
-                         id_graph='gini_graph'),
 
     # EDUCACION ADULTOS
     html.Div(children=[
@@ -757,6 +794,15 @@ app.layout = html.Div(children=[
     ])
 ])
 
+#Graph  : Ordered Bars - Gini
+@app.callback(
+    Output('gini_bars', 'figure'),
+    Input('gini_input_a', 'value'),
+    Input('gini_input_y', 'value'))
+def update_ginibars(area, year):
+    return sort_gini(area,year)
+
+
 #Graph 1 : Stacked Bars - Tamano medio hogar
 @app.callback(
     Output('Graph', 'figure'),
@@ -864,21 +910,21 @@ def ss_bars(country, area):
     except (ValueError, KeyError):
         return {}
 
-#Graph 7 : Stacked Bars - Ocupados urbanos informales
+#Graph 7 : Time series - Ocupados urbanos informales
 @app.callback(
         Output('oui_graph','figure'),
         Input('oui_input_cty','value'))
 def stack_bars(country):
     try: return stacked_bars('ocupados_informal_sexo', country)
-    except ValueError: return {}
+    except (KeyError,ValueError): return {}
 
 #Graph 8 : Gini : 45 degree line
 @app.callback(
         Output('gini_graph','figure'),
-        Input('gini_input_area','value'),
-        Input('gini_input_time', 'value'))
-def c_gini(area, time):
-    return gini(area,time)
+        Input('gini_input_area','value'))
+def c_gini(area):
+    try: return gini(area)
+    except (ValueError,KeyError): return {}
 
 # BOTONES URBANOS
 @app.callback(
