@@ -19,7 +19,8 @@ csv_files = ['tamano_hogar',
              'poblacion_adulta_escolaridad',
              'hogares_disponibilidad_servicios',
              'tasa_victimizacion',
-             'relacion_quintil_5_1']
+             'relacion_quintil_5_1',
+             'asistencia_escolar_quintil']
 
 data_frames = {name: pd.read_csv('{}.csv'.format(name)) for name in csv_files}
 data_frame = data_frames['tamano_hogar']
@@ -288,51 +289,58 @@ def gini(area):
 
     return figure
 
-def bars_lines(country, year, b1, b2, b3, b4):
-    # Filters
-    if b1 == red_button and b3 == red_button:
-        filt = [('Hombres', 'Urbana'), ('Hombres', 'Rural')]
-    elif b1 == red_button and b4 == red_button:
-        filt = [('Hombres', 'Urbana'), ('Mujeres', 'Rural')]
-    elif b2 == red_button and b3 == red_button:
-        filt = [('Mujeres', 'Urbana'), ('Hombres', 'Rural')]
-    elif b1 == red_button and b2 == red_button:
-        filt = [('Hombres', 'Urbana'), ('Mujeres', 'Urbana')]
-    elif b3 == red_button and b4 == red_button:
-        filt = [('Hombres', 'Rural'), ('Mujeres', 'Rural')]
+def bars_lines(country, year, xdim_b, group_b):
+    # Filter Data
+    def filters_data(country, year, filt):
+        df = data_frames['asistencia_escolar_quintil']
+        df = df[(df['País'] == country) &
+                (df['Años'] == year) &
+                (df[filt[0]] == filt[1]) &
+                (df['Grandes grupos de edad'] == 'Total (7 a 24 años)')]
+        return df
+
+    if xdim_b == [red_button, white_button, white_button] and group_b == [white_button, red_button, white_button]:
+        df = filters_data(country, year, ('Área geográfica', 'Nacional'))
+        x = 'Sexo'
+    elif xdim_b == [red_button, white_button, white_button] and group_b == [white_button, white_button, red_button]:
+        df = filters_data(country, year, ('Quintil', 'Total quintiles'))
+        x = 'Sexo'
+    elif xdim_b == [white_button, red_button, white_button] and group_b == [red_button, white_button, white_button]:
+        df = filters_data(country, year, ('Área geográfica', 'Nacional'))
+        x = 'Quintil'
+    elif xdim_b == [white_button, red_button, white_button] and group_b == [white_button, white_button, red_button]:
+        df = filters_data(country, year, ('Sexo', 'Ambos sexos'))
+        x = 'Quintil'
+    elif xdim_b == [white_button, white_button, red_button] and group_b == [red_button, white_button, white_button]:
+        df = filters_data(country, year, ('Quintil', 'Total quintiles'))
+        x = 'Área geográfica'
     else:
-        filt = [('Mujeres', 'Urbana'), ('Mujeres', 'Rural')]
+        df = filters_data(country, year, ('Sexo', 'Ambos sexos'))
+        x = 'Área geográfica'
 
-    df = data_frames['poblacion_adulta_escolaridad']
+    df['valor'] = df['valor'].astype(dtype='float64')
 
-    filt_df = df.query(
-        "(Sexo=='{}' & `Área geográfica`=='{}') | (Sexo=='{}' & `Área geográfica`=='{}')".format(filt[0][0],
-                                                                                                 filt[0][1],
-                                                                                                 filt[1][0],
-                                                                                                 filt[1][1]))
-
-    filt_df = filt_df.query("País=='{}' & Años=='{}'".format(country, year))
-
-    filt_df = filt_df.groupby(['Sexo', 'Área geográfica'],
-                              as_index=False).apply(lambda x: x.sort_values(by=['Escolaridad (EH)'],
-                                                                            axis=0, key=lambda x: pd.Series(
-            [0, 2, 3, 1]))).reset_index()
-
-    filt_df['valor'] = filt_df['valor'].astype(dtype='float64')
+    # Group bars
+    if group_b == [red_button, white_button, white_button]:
+        group = 'Sexo'
+    elif group_b == [white_button, red_button, white_button]:
+        group = 'Quintil'
+    else:
+        group = 'Área geográfica'
 
     # FIGURE
-    xs = filt_df['Escolaridad (EH)'].unique()
-    ybars = filt_df.query("Sexo == '{}' & `Área geográfica`=='{}'".format(filt[0][0], filt[0][1]))['valor']
-    yline = filt_df.query("Sexo == '{}' & `Área geográfica`=='{}'".format(filt[1][0], filt[1][1]))['valor']
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(name='{} - {}'.format(filt[0][0], filt[0][1]),
-                         x=xs,
-                         y=ybars))
-    fig.add_trace(go.Scatter(name='{} - {}'.format(filt[1][0], filt[1][1]),
-                             x=xs, y=yline, mode='lines+markers'))
-
-    fig.update_layout(title_text="{} - {}".format(country, year))
+    fig = px.bar(df,
+                 x=x,
+                 y='valor',
+                 color=group,
+                 labels={'valor': 'Procentaje'})
+    fig.update_layout(title_text='{} {} - Asistencia Escolar'.format(country, year),
+                      barmode='group',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 10 for i in range(11)])
+                      )
+    fig.update_yaxes(range=(0, 100))
     return fig
 
 def side_side_bars(data, country, year):
@@ -668,35 +676,49 @@ app.layout = html.Div(children=[
                          dropdown_placeholder1='Seleccionar País o Región',
                          id_graph='oui_graph'),
 
-    # EDUCACION ADULTOS
+    # ASISTENCIA ESCOLAR
     html.Div(children=[
 
         dbc.Row([
-            html.H2('Población adulta según nivel educativo, por área geográfica y sexo')
+            html.H2('Asistencia Escolar, por sexo, quintil y área geográfica')
         ],
             justify='center'
         ),
 
         dbc.Row([
-            html.Label('Seleccionar dos opciones (botones)')
+            dbc.Col(html.Label('Seleccionar dimensión del eje horizontal'),
+            width={'offset': 2, 'size': 8})
         ],
-            justify='center'
+            justify='start',
+            align='end'
         ),
 
         dbc.Row([
             dbc.Col([
-                html.Button('Hombres Urbanos', id='button_hombres', n_clicks=0, style=white_button),
-                html.Button('Mujeres Urbanas', id='button_mujeres', n_clicks=0, style=white_button)
-            ], width={'offset': 4, 'size': 8})],
-            justify='center'
+                html.Button('Sexo', id='button_sexo', n_clicks=0, style=white_button),
+                html.Button('Quintil', id='button_quintil', n_clicks=0, style=white_button),
+                html.Button('Área geográfica', id='button_area', n_clicks=0, style=white_button)
+            ], width={'offset': 2, 'size': 8})],
+            justify='center',
+            align='start'
+        ),
+
+        dbc.Row([
+            dbc.Col(html.Label('Seleccionar agrupación de barras'),
+            width={'offset': 2, 'size': 8})
+        ],
+            justify='start',
+            align='end'
         ),
 
         dbc.Row([
             dbc.Col([
-                html.Button('Hombres Rurales', id='button_hombres_r', n_clicks=0, style=white_button),
-                html.Button('Mujeres Rurales', id='button_mujeres_r', n_clicks=0, style=white_button)
-            ], width={'offset': 4, 'size': 8})],
-            justify='center'
+                html.Button('Sexo', id='button_sexo2', n_clicks=0, style=white_button),
+                html.Button('Quintil', id='button_quintil2', n_clicks=0, style=white_button),
+                html.Button('Área geográfica', id='button_area2', n_clicks=0, style=white_button)
+            ], width={'offset': 2, 'size': 8})],
+            justify='center',
+            align='start'
         ),
     ]),
 
@@ -708,8 +730,7 @@ app.layout = html.Div(children=[
                                             data_frames['poblacion_adulta_escolaridad']['País'].unique()],
                          dropdown_placeholder1='Seleccionar País',
                          id_dropdown2='edu_input_year',
-                         dropdown_options2=[{'label': c, 'value': c} for c in
-                                            data_frames['poblacion_adulta_escolaridad']['Años'].unique()],
+                         dropdown_options2=[{'label': c, 'value': c} for c in anios_gini],
                          dropdown_placeholder2='Seleccionar año',
                          id_graph='edu_graph'),
 
@@ -801,7 +822,6 @@ app.layout = html.Div(children=[
     Input('gini_input_y', 'value'))
 def update_ginibars(area, year):
     return sort_gini(area,year)
-
 
 #Graph 1 : Stacked Bars - Tamano medio hogar
 @app.callback(
@@ -926,18 +946,17 @@ def c_gini(area):
     try: return gini(area)
     except (ValueError,KeyError): return {}
 
-# BOTONES URBANOS
+# BOTONES EJE HORIZONTAL
 @app.callback(
-    Output('button_hombres', 'style'),
-    Input('button_hombres', 'n_clicks'),
-    State('button_mujeres', 'style'),
-    State('button_hombres', 'style'),
-    State('button_mujeres_r', 'style'),
-    State('button_hombres_r', 'style'))
-def updatem(click, s1, s2, s3, s4):
-    count = [1 for s in [s1, s2, s3, s4] if s == red_button]
+    Output('button_sexo', 'style'),
+    Input('button_sexo', 'n_clicks'),
+    State('button_sexo', 'style'),
+    State('button_quintil', 'style'),
+    State('button_area', 'style'))
+def updatem(click, s1, s2, s3):
+    count = [1 for s in [s1, s2, s3] if s == red_button]
     if click > 0:
-        if len(count) < 2 and s2 == white_button:
+        if len(count) == 0:
             return red_button
         else:
             return white_button
@@ -945,34 +964,15 @@ def updatem(click, s1, s2, s3, s4):
         return white_button
 
 @app.callback(
-    Output('button_mujeres', 'style'),
-    Input('button_mujeres', 'n_clicks'),
-    State('button_mujeres', 'style'),
-    State('button_hombres', 'style'),
-    State('button_mujeres_r', 'style'),
-    State('button_hombres_r', 'style'))
-def updatew(click, s1, s2, s3, s4):
-    count = [1 for s in [s1, s2, s3, s4] if s == red_button]
+    Output('button_quintil', 'style'),
+    Input('button_quintil', 'n_clicks'),
+    State('button_sexo', 'style'),
+    State('button_quintil', 'style'),
+    State('button_area', 'style'))
+def updatew(click, s1, s2, s3):
+    count = [1 for s in [s1, s2, s3] if s == red_button]
     if click > 0:
-        if len(count) < 2 and s1 == white_button:
-            return red_button
-        else:
-            return white_button
-    else:
-        return white_button
-
-# BOTONES RURALES
-@app.callback(
-    Output('button_hombres_r', 'style'),
-    Input('button_hombres_r', 'n_clicks'),
-    State('button_mujeres', 'style'),
-    State('button_hombres', 'style'),
-    State('button_mujeres_r', 'style'),
-    State('button_hombres_r', 'style'))
-def updatemr(click, s1, s2, s3, s4):
-    count = [1 for s in [s1, s2, s3, s4] if s == red_button]
-    if click > 0:
-        if len(count) < 2 and s4 == white_button:
+        if len(count) == 0:
             return red_button
         else:
             return white_button
@@ -980,16 +980,67 @@ def updatemr(click, s1, s2, s3, s4):
         return white_button
 
 @app.callback(
-    Output('button_mujeres_r', 'style'),
-    Input('button_mujeres_r', 'n_clicks'),
-    State('button_mujeres', 'style'),
-    State('button_hombres', 'style'),
-    State('button_mujeres_r', 'style'),
-    State('button_hombres_r', 'style'))
-def updatewr(click, s1, s2, s3, s4):
-    count = [1 for s in [s1, s2, s3, s4] if s == red_button]
+    Output('button_area', 'style'),
+    Input('button_area', 'n_clicks'),
+    State('button_sexo', 'style'),
+    State('button_quintil', 'style'),
+    State('button_area', 'style'))
+def updatemr(click, s1, s2, s3):
+    count = [1 for s in [s1, s2, s3] if s == red_button]
     if click > 0:
-        if len(count) < 2 and s3 == white_button:
+        if len(count) == 0:
+            return red_button
+        else:
+            return white_button
+    else:
+        return white_button
+
+# BOTONES AGRUPACION BARRAS
+@app.callback(
+    Output('button_sexo2', 'style'),
+    Input('button_sexo2', 'n_clicks'),
+    State('button_sexo', 'style'),
+    State('button_sexo2', 'style'),
+    State('button_quintil2', 'style'),
+    State('button_area2', 'style'))
+def updates2(click, s1, s4, s5, s6):
+    count = [1 for s in [s4, s5, s6] if s == red_button]
+    if click > 0 and s1 == white_button:
+        if len(count) == 0:
+            return red_button
+        else:
+            return white_button
+    else:
+        return white_button
+
+@app.callback(
+    Output('button_quintil2', 'style'),
+    Input('button_quintil2', 'n_clicks'),
+    State('button_quintil', 'style'),
+    State('button_sexo2', 'style'),
+    State('button_quintil2', 'style'),
+    State('button_area2', 'style'))
+def updateq2(click, s2, s4, s5, s6):
+    count = [1 for s in [s4, s5, s6] if s == red_button]
+    if click > 0 and s2 == white_button:
+        if len(count) == 0:
+            return red_button
+        else:
+            return white_button
+    else:
+        return white_button
+
+@app.callback(
+    Output('button_area2', 'style'),
+    Input('button_area2', 'n_clicks'),
+    State('button_area', 'style'),
+    State('button_sexo2', 'style'),
+    State('button_quintil2', 'style'),
+    State('button_area2', 'style'))
+def updatea2(click, s3, s4, s5, s6):
+    count = [1 for s in [s4, s5, s6] if s == red_button]
+    if click > 0 and s3 == white_button:
+        if len(count) == 0:
             return red_button
         else:
             return white_button
@@ -1001,13 +1052,19 @@ def updatewr(click, s1, s2, s3, s4):
     Output('edu_graph', 'figure'),
     Input('edu_input_cty', 'value'),
     Input('edu_input_year', 'value'),
-    Input('button_hombres', 'style'),
-    Input('button_mujeres', 'style'),
-    Input('button_hombres_r', 'style'),
-    Input('button_mujeres_r', 'style'))
-def edu_graph(c, y, b1, b2, b3, b4):
-    try: return bars_lines(c, y, b1, b2, b3, b4)
-    except KeyError: return {}
+    Input('button_sexo', 'style'),
+    Input('button_quintil', 'style'),
+    Input('button_area', 'style'),
+    Input('button_sexo2', 'style'),
+    Input('button_quintil2', 'style'),
+    Input('button_area2', 'style'))
+def edu_graph(c, y, b1, b2, b3, b4, b5, b6):
+    try:
+        xdim = [b1,b2,b3]
+        group = [b4,b5,b6]
+        return bars_lines(c, y, xdim, group)
+    except KeyError:
+        return {}
 
 #Graph 10 : Hogares Servicios Vivienda
 @app.callback(
