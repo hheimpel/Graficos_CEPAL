@@ -20,7 +20,8 @@ csv_files = ['tamano_hogar',
              'hogares_disponibilidad_servicios',
              'tasa_victimizacion',
              'relacion_quintil_5_1',
-             'asistencia_escolar_quintil']
+             'asistencia_escolar_quintil',
+             'acceso_electricidad_quintil']
 
 data_frames = {name: pd.read_csv('{}.csv'.format(name)) for name in csv_files}
 data_frame = data_frames['tamano_hogar']
@@ -91,7 +92,7 @@ def time_series_quintil(data, country, area_g, indicador):
                            tick0=df["Años"].min(),
                            dtick=1
                        ))
-
+    lfig.update_traces(mode='lines+markers')
     return lfig
 
 def side_stacked_bars(data, country, dim):
@@ -242,7 +243,7 @@ def stacked_bars(data, country):
                           tickvals=[i for i in range(filt_data['Años'].min(), filt_data['Años'].max() + 1)])
                       )
     fig.update_xaxes(tickangle=45)
-
+    fig.update_traces(mode='lines+markers')
     return fig
 
 def clean_gini(area):
@@ -343,7 +344,7 @@ def bars_lines(country, year, xdim_b, group_b):
     fig.update_yaxes(range=(0, 100))
     return fig
 
-def side_side_bars(data, country, year):
+def side_side_bars(data, country, year, title, x, color):
     # Select Data Frame
     data_frame = data_frames[data].copy(deep=True)
     data_frame['valor'] = data_frame['valor'].astype(dtype='float64')
@@ -354,15 +355,19 @@ def side_side_bars(data, country, year):
                            (data_frame['País'] == country)]
 
     # Figure
-    fig = go.Figure(data=[
-        go.Bar(name=area,
-               x=filt_data['Servicios básicos_(EH)'].unique(),
-               y=filt_data[filt_data["Área geográfica"] == area]['valor']) for area in
-        filt_data['Área geográfica'].unique()]
-    )
+    fig = px.bar(filt_data,
+                 x=x,
+                 y='valor',
+                 color=color,
+                 labels={'valor': 'Porcentaje'})
 
-    fig.update_layout(title_text='{} {}'.format(country, str(year)),
-                      barmode='group')
+    fig.update_layout(title_text="{} {} - {}".format(country, year, title),
+                      barmode='group',
+                      yaxis=dict(
+                          tickmode='array',
+                          tickvals=[i * 10 for i in range(11)])
+                      )
+    fig.update_yaxes(range=(0, 100))
 
     return fig
 
@@ -421,6 +426,38 @@ def points(data, year, initsort, sex_area, sa_dims):
     fig.update_xaxes(color='black')
     return fig
 
+def time_series_mult(data, countries, area, title, yleg):
+    # Data frame
+    df = data_frames[data].copy(deep=True)
+    df['Años'] = df['Años'].astype(dtype='intc')
+    df['valor'] = df['valor'].astype(dtype='float64')
+
+    # Filter
+    try:
+        df_country = df[(df['País'].isin(countries)) &
+                        (df['Área geográfica'] == area)]
+    except KeyError:
+        df_country = df[(df['País'].isin(countries)) &
+                        (df['Sexo'] == area)]
+
+    # Figure
+    fig = px.line(df_country,
+                  x='Años',
+                  y='valor',
+                  color='País',
+                  labels={'valor': yleg})
+
+    fig.update_layout(title_text=title,
+                      xaxis=dict(
+                          tickmode='array',
+                          tickvals=[i for i in range(df_country['Años'].min(), df_country['Años'].max() + 1)])
+                      )
+    fig.update_xaxes(tickangle=45)
+    fig.update_traces(mode='lines+markers')
+    for i, elem in enumerate(fig.data):
+        fig.data[i].name = pais_iso[fig.data[i].name]
+    return fig
+
 # User input
 desagregacion = ["Quintil", "Área geográfica"]
 paises = list(data_frame['País'].unique())
@@ -434,7 +471,6 @@ quintiles = list(data_frame["Quintil"].unique())
 area = list(data_frame["Área geográfica"].unique())
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
-
 
 # 2 Column layout
 def two_column_layout(**kwargs):
@@ -501,7 +537,7 @@ def two_column_layout(**kwargs):
     ])
 
 # Single column layout
-def single_column_layout(**kwargs):
+def single_column_layout(multi1=False,multi2=False,**kwargs):
     title = kwargs['title']
     title2 = kwargs['title2']
     id_dropdown1 = kwargs['id_dropdown1']
@@ -536,11 +572,13 @@ def single_column_layout(**kwargs):
             dbc.Row([
                 dbc.Col([
                     dcc.Dropdown(
+                        multi=multi1,
                         id=id_dropdown1,
                         options=dropdown_options1,
                         placeholder=dropdown_placeholder1
                     ),
                     dcc.Dropdown(
+                        multi=multi2,
                         id=id_dropdown2,
                         options=dropdown_options2,
                         placeholder=dropdown_placeholder2
@@ -569,6 +607,7 @@ def single_column_layout(**kwargs):
             dbc.Row([
                 dbc.Col([
                     dcc.Dropdown(
+                        multi=multi1,
                         id=id_dropdown1,
                         options=dropdown_options1,
                         placeholder=dropdown_placeholder1
@@ -750,69 +789,60 @@ app.layout = html.Div(children=[
                 min=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
                 max=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').max(),
                 step=1,
-                marks={2000: '2000',
-                       2010: '2010',
-                       2019: '2019'},
+                marks={int(year) : str(year) for year in anios_rim+[2019]},
                 value=data_frames['hogares_disponibilidad_servicios']['Años'].astype(dtype='intc').min(),
             )
         ], width={'offset': 2, 'size': 8})
     ]),
 
-    # TASA DE VICTIMIZACION
-    single_column_layout(title='Tasa de victimización, por sexo',
-                         title2='Scatter dinámico',
-                         id_dropdown1='vic_input_cty',
-                         dropdown_options1=[],
-                         dropdown_placeholder1='',
-                         id_graph='vic_graph'),
+    # ACCESO A ELECTRICIDAD
+    single_column_layout(title='Proporción de la población con acceso a electricidad, por área geográfica y quintil',
+                         title2='Barras lado a lado',
+                         id_dropdown1='elec_input_cty',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['acceso_electricidad_quintil']['País'].unique()],
+                         dropdown_placeholder1='Seleccionar País',
+                         id_graph='elec_graph'),
     dbc.Row([
         dbc.Col([
             html.Label('Seleccionar un año'),
             dcc.Slider(
-                id='slider_vic',
-                min=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
-                max=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').max(),
-                step=None,
-                marks={int(year): str(year) for year in data_frames['tasa_victimizacion']['Años'].unique()},
-                value=data_frames['tasa_victimizacion']['Años'].astype(dtype='intc').min(),
+                id='slider_elec',
+                min=data_frames['acceso_electricidad_quintil']['Años'].astype(dtype='intc').min(),
+                max=data_frames['acceso_electricidad_quintil']['Años'].astype(dtype='intc').max(),
+                step=1,
+                marks={int(year): str(year) for year in anios_rim + [2019]},
+                value=data_frames['acceso_electricidad_quintil']['Años'].astype(dtype='intc').min(),
             )
         ], width={'offset': 2, 'size': 8})
     ]),
+    # TASA DE VICTIMIZACION
+    single_column_layout(multi1=True,
+                         title='Tasa de victimización, por sexo',
+                         title2='Serie de Tiempo',
+                         id_dropdown1='vic_input_cty',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['tasa_victimizacion']['País'].unique()],
+                         dropdown_placeholder1='Seleccionar Países',
+                         id_dropdown2='vic_input_sex',
+                         dropdown_options2=[{'label': c, 'value': c} for c in
+                                            data_frames['tasa_victimizacion']['Sexo'].unique()],
+                         dropdown_placeholder2='Seleccionar sexo',
+                         id_graph='vic_graph'),
 
     # RELACION DEL INGRESO MEDIO: QUINTIL 5/ QUINTIL 1
-    html.Div(children=[
-
-        dbc.Row([
-            html.H2('Relación del ingreso medio per cápita del hogar: quintil 5/ quintil 1')
-        ],
-            justify='center'
-        ),
-
-        dbc.Row([
-            html.H3('Scatter dinámico')
-        ],
-            justify='center'
-        ),
-
-        dbc.Row([
-            dbc.Col([
-                dcc.Graph(id='quintil51_graph')
-            ], width={'offset': 2, 'size': 8})
-        ]),
-    ]),
-    dbc.Row([
-        dbc.Col([
-            html.Label('Seleccionar un año'),
-            dcc.Slider(
-                id='slider_quintil51',
-                min=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').min(),
-                max=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').max(),
-                step=None,
-                marks={int(year): str(year) for year in data_frames['relacion_quintil_5_1']['Años'].unique()},
-                value=data_frames['relacion_quintil_5_1']['Años'].astype(dtype='intc').min(),
-            )
-        ], width={'offset': 2, 'size': 8})
-    ])
+    single_column_layout(multi1=True,
+                         title='Relación de Quintil de Ingreso: 5 y 1',
+                         title2='Serie de Tiempo',
+                         id_dropdown1='51_input_cty',
+                         dropdown_options1=[{'label': c, 'value': c} for c in
+                                            data_frames['relacion_quintil_5_1']['País'].unique()],
+                         dropdown_placeholder1='Seleccionar Países',
+                         id_dropdown2='51_input_area',
+                         dropdown_options2=[{'label': c, 'value': c} for c in
+                                            data_frames['relacion_quintil_5_1']['Área geográfica'].unique()],
+                         dropdown_placeholder2='Seleccionar área geográfica',
+                         id_graph='51_graph'),
 ])
 
 #Graph  : Ordered Bars - Gini
@@ -1072,24 +1102,49 @@ def edu_graph(c, y, b1, b2, b3, b4, b5, b6):
     Input('hog_input_cty','value'),
     Input('slider_hog','value'))
 def hog_graph(country,year):
-    try: return side_side_bars('hogares_disponibilidad_servicios',country,year)
-    except ValueError: return {}
+    try: return side_side_bars('hogares_disponibilidad_servicios',
+                               country,
+                               year,
+                               "Disponibilidad de Servicios",
+                               'Servicios básicos_(EH)',
+                               'Área geográfica')
+    except (KeyError,ValueError): return {}
+
+#Graph # : Hogares Servicios Vivienda
+@app.callback(
+    Output('elec_graph','figure'),
+    Input('elec_input_cty','value'),
+    Input('slider_elec','value'))
+def elec_graph(country,year):
+    try: return side_side_bars('acceso_electricidad_quintil',
+                               country,
+                               year,
+                               "Acceso a Electricidad",
+                               'Quintil',
+                               'Área geográfica')
+    except (KeyError,ValueError): return {}
 
 #Graph 11 : Tasa de victimizacion
 @app.callback(
     Output('vic_graph','figure'),
-    Input('slider_vic','value'))
-def victim(year):
-    try: return points('tasa_victimizacion', year, 'Mujeres', 'Sexo', ['Hombres', 'Mujeres'])
-    except ValueError: return {}
+    [Input('vic_input_cty','value')],
+    Input('vic_input_sex', 'value'))
+def victim(countries, sex):
+    try: return time_series_mult('tasa_victimizacion', countries, sex,
+                                 "Tasa de victimización",
+                                 "Porcentaje")
+    except (TypeError,ValueError,KeyError): return {}
 
 #Graph 12 : Relacion quintil 5 y quintil 1.
 @app.callback(
-    Output('quintil51_graph','figure'),
-    Input('slider_quintil51','value'))
-def quintil51(year):
-    try: return points('relacion_quintil_5_1', year, 'Urbana', 'Área geográfica', ['Urbana', 'Rural'])
-    except ValueError: return {}
+    Output('51_graph','figure'),
+    [Input('51_input_cty','value')],
+    Input('51_input_area', 'value'))
+def quintil51(countries, area):
+    try: return time_series_mult('relacion_quintil_5_1', countries, area,
+                                 'Relación Quintil de Ingreso: 5 y 1',
+                                 "Quintil 5 / Quintil 1")
+    except (TypeError,ValueError,KeyError): return {}
 
 if __name__ == '__main__':
     app.run_server(debug=True)
