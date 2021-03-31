@@ -48,9 +48,8 @@ red_button = {'background-color': 'red',
 def time_series_quintil(data, country, area_g, indicador):
     df = data_frames[data]
     df["valor"] = df["valor"].astype(dtype='float64')
-    quints = {qt: "qt{}".format(qt[-1]) for qt in df["Quintil"].unique()}
-    varright = {"Tamaño medio del hogar": ["tam_hog_", "Tamaño hogar"],
-                "Mujeres con dedicación al hogar": ["Muj_d_hog_", "Porcentaje"]}
+    varright = {"Tamaño medio del hogar": [": Tamaño hogar", "Tamaño hogar"],
+                "Mujeres con dedicación al hogar": ["Mujeres \ Hogar: ", "Porcentaje"]}
 
     if area_g == 'Área geográfica':
         q = df[
@@ -65,8 +64,6 @@ def time_series_quintil(data, country, area_g, indicador):
                        y='valor',
                        color='Área geográfica',
                        labels={'valor': varright[indicador][1]})
-        for i, elem in enumerate(lfig.data):
-            lfig.data[i].name = "{}{}".format(varright[indicador][0], lfig.data[i].name[:3])
 
     else:
         q = df[
@@ -81,9 +78,6 @@ def time_series_quintil(data, country, area_g, indicador):
                        y='valor',
                        color='Quintil',
                        labels={'valor': varright[indicador][1]})
-
-        for i, elem in enumerate(lfig.data):
-            lfig.data[i].name = "{}{}".format(varright[indicador][0], quints[lfig.data[i].name])
 
     lfig.update_layout(title_text=country + " - " + indicador,
                        legend_title="Desagregación",
@@ -299,7 +293,8 @@ def bars_lines(country, year, xdim_b, group_b):
                 (df[filt[0]] == filt[1]) &
                 (df['Grandes grupos de edad'] == 'Total (7 a 24 años)')]
         return df
-
+    if xdim_b == [white_button]*3 or group_b == [white_button]*3 or group_b==xdim_b:
+        return {}
     if xdim_b == [red_button, white_button, white_button] and group_b == [white_button, red_button, white_button]:
         df = filters_data(country, year, ('Área geográfica', 'Nacional'))
         x = 'Sexo'
@@ -353,6 +348,8 @@ def side_side_bars(data, country, year, title, x, color):
     # Filter data
     filt_data = data_frame[(data_frame['Años'] == year) &
                            (data_frame['País'] == country)]
+
+    filt_data.sort_values('Quintil', inplace=True)
 
     # Figure
     fig = px.bar(filt_data,
@@ -424,6 +421,32 @@ def points(data, year, initsort, sex_area, sa_dims):
         layout=layout
     )
     fig.update_xaxes(color='black')
+    return fig
+
+def time_series_mult_facet(data, countries, title, yleg):
+    # Data frame
+    df = data_frames[data].copy(deep=True)
+    df['Años'] = df['Años'].astype(dtype='intc')
+    df['valor'] = df['valor'].astype(dtype='float64')
+
+    # Filter
+    df_country = df[(df['País'].isin(countries)) &
+                   (df['Sexo'].isin(['Hombres', 'Mujeres']))]
+
+
+    # Figure
+    fig = px.line(df_country,
+                  x='Años',
+                  y='valor',
+                  color='País',
+                  facet_col = 'Sexo',
+                  labels={'valor': yleg})
+
+    fig.update_layout(title_text=title)
+    fig.update_xaxes(tickangle=45)
+    fig.update_traces(mode='lines+markers')
+    for i, elem in enumerate(fig.data):
+        fig.data[i].name = pais_iso[fig.data[i].name]
     return fig
 
 def time_series_mult(data, countries, area, title, yleg):
@@ -536,8 +559,80 @@ def two_column_layout(**kwargs):
         )
     ])
 
+# 2 Column layout 4 placeholders
+def two_column_layout_4place(**kwargs):
+    title = kwargs['title']
+    title_graph1 = kwargs['title_graph1']
+    title_graph2 = kwargs['title_graph2']
+    id_dropdown1 = kwargs['id_dropdown1']
+    dropdown_options1 = kwargs['dropdown_options1']
+    dropdown_placeholder1 = kwargs['dropdown_placeholder1']
+    id_dropdown2 = kwargs['id_dropdown2']
+    dropdown_options2 = kwargs['dropdown_options2']
+    dropdown_placeholder2 = kwargs['dropdown_placeholder2']
+    id_dropdown3 = kwargs['id_dropdown3']
+    dropdown_options3 = kwargs['dropdown_options3']
+    dropdown_placeholder3 = kwargs['dropdown_placeholder3']
+    id_dropdown4 = kwargs['id_dropdown4']
+    dropdown_options4 = kwargs['dropdown_options4']
+    dropdown_placeholder4 = kwargs['dropdown_placeholder4']
+    id_graph1 = kwargs['id_graph1']
+    id_graph2 = kwargs['id_graph2']
+
+    return html.Div(children=[
+
+        dbc.Row([
+            html.H2(title)
+        ],
+            justify='center'
+        ),
+
+        dbc.Row([
+            dbc.Col(html.H3(title_graph1), align='center'),
+            dbc.Col(html.H3(title_graph2))
+        ],
+            justify='center', align='center'
+        ),
+
+        dbc.Row([
+            dbc.Col([
+                dcc.Dropdown(
+                    id=id_dropdown1,
+                    options=dropdown_options1,
+                    placeholder=dropdown_placeholder1
+                ),
+                dcc.Dropdown(
+                    id=id_dropdown2,
+                    options=dropdown_options2,
+                    placeholder=dropdown_placeholder2
+                )
+            ]),
+            dbc.Col([
+                dcc.Dropdown(
+                    id=id_dropdown3,
+                    options=dropdown_options3,
+                    placeholder=dropdown_placeholder3
+                ),
+                dcc.Dropdown(
+                    id=id_dropdown4,
+                    options=dropdown_options4,
+                    placeholder=dropdown_placeholder4
+                )
+            ])
+        ],
+            justify='center'
+        ),
+
+        dbc.Row([
+            dbc.Col(dcc.Graph(id=id_graph1)),
+            dbc.Col(dcc.Graph(id=id_graph2))
+        ],
+            justify='center'
+        )
+    ])
+
 # Single column layout
-def single_column_layout(multi1=False,multi2=False,**kwargs):
+def single_column_layout(multi1=False,multi2=False,offset=2,size=8,**kwargs):
     title = kwargs['title']
     title2 = kwargs['title2']
     id_dropdown1 = kwargs['id_dropdown1']
@@ -613,7 +708,7 @@ def single_column_layout(multi1=False,multi2=False,**kwargs):
                         placeholder=dropdown_placeholder1
                     ),
                     dcc.Graph(id=id_graph)
-                ], width={'offset': 2, 'size': 8})
+                ], width={'offset': offset, 'size': size})
             ]),
         ])
 
@@ -646,7 +741,7 @@ app.layout = html.Div(children=[
                          id_graph='gini_bars'),
 
     # TAMANO MEDIO HOGARES
-    two_column_layout(title='Tamaño medio de los hogares',
+    two_column_layout_4place(title='Tamaño medio de los hogares',
                       title_graph1='Barras Agrupadas',
                       title_graph2='Serie de Tiempo',
                       id_dropdown1='input_country',
@@ -658,6 +753,9 @@ app.layout = html.Div(children=[
                       id_dropdown3='input_country_line',
                       dropdown_options3=[{'label': c, 'value': c} for c in paises],
                       dropdown_placeholder3='Seleccionar País o Región',
+                      id_dropdown4='input_geog_area',
+                      dropdown_placeholder4='Seleccionar desagregación',
+                      dropdown_options4=[{'label': c, 'value': c} for c in ['Área geográfica','Quintil']],
                       id_graph1='Graph',
                       id_graph2='Graph_line'),
 
@@ -719,7 +817,7 @@ app.layout = html.Div(children=[
     html.Div(children=[
 
         dbc.Row([
-            html.H2('Asistencia Escolar, por sexo, quintil y área geográfica')
+            html.H2('Asistencia Escolar (7 a 24 años), por sexo, quintil y área geográfica')
         ],
             justify='center'
         ),
@@ -800,7 +898,7 @@ app.layout = html.Div(children=[
                          title2='Barras lado a lado',
                          id_dropdown1='elec_input_cty',
                          dropdown_options1=[{'label': c, 'value': c} for c in
-                                            data_frames['acceso_electricidad_quintil']['País'].unique()],
+                                            sorted(list(data_frames['acceso_electricidad_quintil']['País'].unique()))],
                          dropdown_placeholder1='Seleccionar País',
                          id_graph='elec_graph'),
     dbc.Row([
@@ -818,21 +916,19 @@ app.layout = html.Div(children=[
     ]),
     # TASA DE VICTIMIZACION
     single_column_layout(multi1=True,
+                         offset=1,
+                         size=10,
                          title='Tasa de victimización, por sexo',
                          title2='Serie de Tiempo',
                          id_dropdown1='vic_input_cty',
                          dropdown_options1=[{'label': c, 'value': c} for c in
                                             data_frames['tasa_victimizacion']['País'].unique()],
                          dropdown_placeholder1='Seleccionar Países',
-                         id_dropdown2='vic_input_sex',
-                         dropdown_options2=[{'label': c, 'value': c} for c in
-                                            data_frames['tasa_victimizacion']['Sexo'].unique()],
-                         dropdown_placeholder2='Seleccionar sexo',
                          id_graph='vic_graph'),
 
     # RELACION DEL INGRESO MEDIO: QUINTIL 5/ QUINTIL 1
     single_column_layout(multi1=True,
-                         title='Relación de Quintil de Ingreso: 5 y 1',
+                         title='Relación del ingreso medio per cápita del hogar: quintil 5 / quintil 1',
                          title2='Serie de Tiempo',
                          id_dropdown1='51_input_cty',
                          dropdown_options1=[{'label': c, 'value': c} for c in
@@ -887,7 +983,7 @@ def update_graph(country, dim):
 
     # The Figure
     fig = go.Figure(data=[
-        go.Bar(name="tam_hog_" + str(year),
+        go.Bar(name=str(year),
                x=x_d,
                y=filt[data_frame["Años"] == year]['valor']) for year in years
     ])
@@ -900,10 +996,11 @@ def update_graph(country, dim):
 #Graph 2 : Time Series - Tamano medio hogar
 @app.callback(
     Output('Graph_line', 'figure'),
-    Input('input_country_line', 'value'))
-def update_graph_line(country):
+    Input('input_country_line', 'value'),
+    Input('input_geog_area', 'value'))
+def update_graph_line(country, dim):
     try:
-        return time_series_quintil('tamano_hogar', country, 'Quintil', "Tamaño medio del hogar")
+        return time_series_quintil('tamano_hogar', country, dim, "Tamaño medio del hogar")
     except (ValueError, KeyError, IndexError):
         return {}
 
@@ -1077,7 +1174,7 @@ def updatea2(click, s3, s4, s5, s6):
     else:
         return white_button
 
-# Graph 9 : Educacion Adultos
+# Graph 9 : Asistencia Escolar
 @app.callback(
     Output('edu_graph', 'figure'),
     Input('edu_input_cty', 'value'),
@@ -1110,7 +1207,7 @@ def hog_graph(country,year):
                                'Área geográfica')
     except (KeyError,ValueError): return {}
 
-#Graph # : Hogares Servicios Vivienda
+#Graph # : Hogares Electricidad
 @app.callback(
     Output('elec_graph','figure'),
     Input('elec_input_cty','value'),
@@ -1127,12 +1224,12 @@ def elec_graph(country,year):
 #Graph 11 : Tasa de victimizacion
 @app.callback(
     Output('vic_graph','figure'),
-    [Input('vic_input_cty','value')],
-    Input('vic_input_sex', 'value'))
-def victim(countries, sex):
-    try: return time_series_mult('tasa_victimizacion', countries, sex,
-                                 "Tasa de victimización",
-                                 "Porcentaje")
+    [Input('vic_input_cty','value')])
+def victim(countries):
+    try: return time_series_mult_facet('tasa_victimizacion',
+                                        countries,
+                                        "Tasa de victimización",
+                                        "Porcentaje")
     except (TypeError,ValueError,KeyError): return {}
 
 #Graph 12 : Relacion quintil 5 y quintil 1.
